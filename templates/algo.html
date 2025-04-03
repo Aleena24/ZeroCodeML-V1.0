@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Algorithm Selection</title>
+
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Static/css -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+
+    <style>
+        body {
+            text-align: center;
+            padding: 50px;
+            background: url("{{ url_for('static', filename='img/bg1.png') }}") no-repeat center center fixed;
+            background-size: cover;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .algo-headline {
+            font-size: 2.5rem;
+            margin-top: 200px;
+        }
+        .algo-categories, .algo-model-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .algo-flip-card {
+            background: transparent;
+            width: 250px;
+            height: 150px;
+            perspective: 1000px;
+            cursor: pointer;
+        }
+        .algo-flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+            transition: transform 0.6s;
+        }
+        .algo-flip-card:hover .algo-flip-card-inner {
+            transform: rotateY(180deg);
+        }
+        .algo-flip-card-front, .algo-flip-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 10px;
+            backface-visibility: hidden;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: white;
+        }
+        .algo-flip-card-front {
+            background: linear-gradient(to bottom, #00d4ff, #008cba);
+        }
+        .algo-flip-card-back {
+            background: white;
+            color: black;
+            transform: rotateY(180deg);
+            font-size: 1rem;
+            padding: 10px;
+            text-align: center;
+        }
+        .selected {
+            border: 3px solid #ff5733 !important;
+            background: rgba(255, 87, 51, 0.2) !important;
+        }
+        .algo-buttons {
+            margin-top: 20px;
+        }
+        .algo-back-button, .algo-submit-button {
+            background: #ff5733;
+            color: white;
+            padding: 10px 20px;
+            font-size: 1rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s ease, transform 0.2s;
+            margin: 10px;
+        }
+        .algo-submit-button {
+            background: #079927;
+        }
+        .algo-back-button:hover {
+            background: #c70039;
+            transform: scale(1.1);
+        }
+        .algo-submit-button:hover {
+            background: #0d844d;
+            transform: scale(1.1);
+        }
+        .dropdown-container {
+            margin-top: 20px;
+        }
+        select {
+            padding: 10px;
+            font-size: 1rem;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            cursor: pointer;
+        }
+        {% include "/includes/navbarCSS.html" %}
+        {% include "/includes/footerCSS.html" %}
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    {% include "/includes/navbar.html" %}
+    <!-- Navbar ends -->
+
+
+    <h1 class="algo-headline">Supervised Algorithm</h1>
+    <div class="algo-categories" id="categories">
+        <div class="algo-flip-card" onclick="selectCategory('Regression')">
+            <div class="algo-flip-card-inner">
+                <div class="algo-flip-card-front">Regression</div>
+                <div class="algo-flip-card-back">Regression is a technique for investigating 
+                    the relationship between independent variables or features and a dependent 
+                    variable or outcome. It's used as a method for predictive modeling in 
+                    machine learning, in which an algorithm is used to predict continuous outcomes.</div>
+            </div>
+        </div>
+        <div class="algo-flip-card" onclick="selectCategory('Classification')">
+            <div class="algo-flip-card-inner">
+                <div class="algo-flip-card-front">Classification</div>
+                <div class="algo-flip-card-back">Classification is a model that tries to predict 
+                    the correct label of a given input data. In classification, the model is 
+                    fully trained using the training data, and then it is evaluated on test 
+                    data before being used to perform prediction on new unseen data.</div>
+            </div>
+        </div>
+    </div>
+    <div class="algo-models-section" id="models" style="display: none;">
+        <h2 id="selected-category"></h2>
+        <form id="model-form" method="POST" action="{{ url_for('preprocessing.Preprocessing') }}">
+            <div class="algo-model-buttons" id="model-buttons"></div>
+            <div class="dropdown-container">
+                <label for="additional-option">Select the target variable:</label>
+                <select name="targetColumn" id="selected-dropdown">
+                    {% for col in df_column %}
+                    <option value="{{col}}">{{col}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <input type="hidden" name="selected_category" id="selected-category-input">
+            <input type="hidden" name="selected_model" id="selected-model">
+            <div class="algo-buttons">
+                <button type="button" class="algo-back-button" onclick="backToCategories()">Cancel</button>
+                <button type="submit" class="algo-submit-button">Submit</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Footer -->
+    {% include "/includes/footer.html" %}
+    <!--Footer ends-->
+
+    <script>
+
+        function loadHTML(containerId, filePath) {
+            fetch(filePath)
+                .then(response => response.text())
+                .then(data => document.getElementById(containerId).innerHTML = data)
+                .catch(error => console.error("Error loading " + filePath, error));
+        }
+
+            // loadHTML("navbar-container", "/static/navbar.html");
+            // loadHTML("footer-container", "/static/footer.html");
+
+        let selectedModel = null;
+        let selectedCategory = null;
+
+        function selectCategory(category) {
+            selectedCategory = category;
+            document.getElementById("categories").style.display = "none";
+            document.getElementById("models").style.display = "block";
+            document.getElementById("selected-category").innerText = category;
+            document.getElementById("selected-category-input").value = category;
+
+            const modelButtons = document.getElementById("model-buttons");
+            modelButtons.innerHTML = "";
+
+            const modelMapping = {
+                                    "Linear Regression": "linear_regression",
+                                    "Elastic Net": "elastic_net",
+                                    "Ridge Regression": "ridge",
+                                    "Lasso Regression": "lasso",
+                                    "Logistic Regression": "logistic_regression",
+                                    "SVC": "linear_svc",
+                                    "Decision Tree": "decision_tree",
+                                    "Random Forest": "random_forest",
+                                    "Gradient Boosting": "gradient_boosting"
+                                };
+
+
+            const models = {
+                Regression: ["Linear Regression", "Elastic Net", "Ridge Regression", "Lasso Regression"],
+                Classification: ["Logistic Regression", "SVM", "Decision Tree", "Random Forest", "Gradient Boosting"]
+            };
+            models[category].forEach(model => {
+                let button = document.createElement("div");
+                button.className = "algo-flip-card";
+                button.innerHTML = `<div class='algo-flip-card-inner' onclick='selectModel(this, "${model}", "${modelMapping[model]}")'>
+                    <div class='algo-flip-card-front'>${model}</div>
+                    <div class='algo-flip-card-back'>Description of ${model}</div>
+                </div>`;
+                modelButtons.appendChild(button);
+            });
+        }
+
+        function selectModel(element, modelDisplay, modelValue) {
+            document.querySelectorAll(".algo-flip-card").forEach(btn => btn.classList.remove("selected"));
+            element.classList.add("selected");
+
+            // Set values in hidden input fields
+            document.getElementById("selected-model").value = modelValue;
+        }
+
+        function backToCategories() {
+            document.getElementById("categories").style.display = "flex";
+            document.getElementById("models").style.display = "none";
+        }
+    </script>
+</body>
+</html>

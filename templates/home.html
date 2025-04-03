@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZeroCodeML - AI for Everyone</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: "Arial", sans-serif;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            background: url("{{ url_for('static', filename='img/bg2.png') }}") no-repeat center center fixed;
+            background-size: cover;
+            text-align: center;
+        }
+        .main{
+            flex:1;
+            padding: 20px;
+        }
+        .logo {
+            width: 150px;
+            animation: bounce 2s infinite;
+        }
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        .hero-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background: rgba(255, 255, 255, 0.8);
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+        }
+        .feature-video {
+            width: 90%;
+            max-width: 900px;
+            margin: 20px auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+        .floating-button {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(90deg, #0073e6, #00c6ff);
+            color: white;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            text-decoration: none;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease;
+        }
+        .floating-button:hover {
+            transform: translateX(-50%) scale(1.05);
+        }
+        .features {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 50px 20px;
+            margin: 50px 0;
+            border-radius: 10px;
+        }
+        .features h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+        .feature-box {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .feature {
+            width: 300px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease-in-out;
+        }
+        .feature:hover {
+            transform: translateY(-5px);
+        }
+        {% include "/includes/navbarCSS.html" %}
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    {% include "/includes/navbar.html" %}
+    <!-- Navbar ends -->
+    <div class="main">
+    <div class="hero-section">
+        <img src="{{ url_for('static', filename='img/logo.png') }}" alt="ZeroCodeML Logo" class="logo">
+        <h1>Welcome to ZeroCodeML</h1>
+        <p>Transform your data effortlessly with our no-code machine learning platform.</p>
+    </div>
+
+    <!-- Feature Section 1: Video -->
+    <div class="feature-section">
+        <h2>Discover the Power of AI</h2>
+        <video class="feature-video" autoplay loop muted>
+            <source src="{{ url_for('static', filename='img/AI.mp4') }}" type="video/mp4">
+        </video>
+        <p><b><h3>Experience AI-driven insights without any coding skills.</b></h3></p>
+    </div>
+
+    <!-- Why Choose ZeroCodeML Section -->
+    <div class="features">
+        <h2>Why Choose ZeroCodeML?</h2>
+        <div class="feature-box">
+            <div class="feature">
+                <h3>Easy to Use</h3>
+                <p>No coding required! Just upload data and get results.</p>
+            </div>
+            <div class="feature">
+                <h3>Powerful Models</h3>
+                <p>Utilize advanced machine learning models with a single click.</p>
+            </div>
+            <div class="feature">
+                <h3>Interactive UI</h3>
+                <p>Designed for seamless and engaging user experience.</p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Feature Section 2: Video -->
+    <div class="feature-section">
+        <h2>Machine Learning Simplified</h2>
+        <video class="feature-video" autoplay loop muted>
+            <source src="{{ url_for('static', filename='img/logo1.mp4') }}" type="video/mp4">
+        </video>
+        <p><b><h3>Upload your dataset and let our platform handle the rest.</h3></b></p>
+    </div>
+    
+    <a href="{{url_for('upload')}}" class="floating-button">Start Now</a>
+</div>
+    <!-- Footer -->
+    {% include "/includes/footer.html" %}
+    <!--Footer ends-->
+    
+    <!-- <script>
+        document.getElementById("navbar-container").innerHTML = '<object type="text/html" data="navbar.html" width="100%" height="80px"></object>';
+        document.getElementById("footer-container").innerHTML = '<object type="text/html" data="footer.html" width="100%" height="100px"></object>';
+    </script> -->
+</body>
+</html>

@@ -1,0 +1,117 @@
+<!--
+	THIS EXAMPLE WAS DOWNLOADED FROM https://echarts.apache.org/examples/en/editor.html?c=heatmap-cartesian&code=G4QwTgBAxgNiDO8ByIC2BTeEC8EDaA5AMJyIQCCBANBMaVgELW0kJZHN1sQAiBAugG4AsACgxESVMkB6Gb3QAzAJYA7dNAD2qxQFd4y7RFQgALmGUAPCAAoAopbQAHGBp5mQASgnSpoSFCoOPg-vr54AIwADDQATDQRNFH8NBByEABKmgDuEFGhYVJ4AMwJAKxxCSmy8lm5EQWF-DEQACw0ABxx1TWZORCxjYWRCTSlEBGx_FLpdRDFQ5JCYotp8kTawOhgptBBaqaaEHZEABbgpliKmmAmu3iWNACeNKAwuuj8q_4Qp-hmJic7lMIGCeGWoia10gNh-ymCUUEEHhAB49gA6VyqADmplOSOUAGpCZ4IABvVbSaG2H4AKwRSPpaMCeGU_Ex6BxeMZxNJFMhTUKfwBICBHnRTn0pxseFpNGUNBZbNl_H4nhEAsFEAAvqtdeJNb50jwlGoNCdzjssJonKZDKp4N9wBAbXajLh-VrJIdNDA7U4AFzkymFJyaAxu1RBgiHJzUENhaF3UzbIN6VRQSM2JzgNDwPkJwVgdCmXRgVQQAAGAAViwATZSZ9B1oMAEjJsDYKAw8DwObAefRdY8eGS_G1EBRACMwAA-CiZ3QgGBtjv0buYPu51DwIcjiKqifTucQDa6VSmVf9wfDkF4Kbaysar2-fUv7VUQuWciWZTwIOei-UimE8TjoNGUBmOg2I3E88aGi-t4gEGnaIBu8CfghXqqGg4G0LWzaNimdYQAAMiAU7oDABCFh-hZPD-f4AYW0ggWBEFQTBYBwZhQFSEhKHrrhGEsVIOEYNG5CLsuZEUVRNFYWEdGKb4wB_kuMAALKisxKlNKgahBjEomSCYlhBrExl6YUkEwFAuhwFOrhBuYHy8XxLoWJyl60FsOyNsu8EeRAriKD5BAWNipymEFHmxhB3nbLFfFqBkIA4nhgHBZIUC-jcQaEAAxIoADsihTooiicIVrSxAAnLEUAAGwCL0pHKFFuyHBAw5gAA1hATkfLYBgGXAkDdZWDDvJglZ7KKyIVgAyv8U43Ko3jWUptHuVq8DbMomAFVlQHiXhxDaHoBhGNp5hWMlQFsedwqmICD2IR4QYvYCwIgLtQGOVRunZVI8CnDkLlgG5Jm-LlMD5bQTkgFAfUKcFynBegqBOOcBj_sGW2CsoKaoEtIHOQTINhGtYB1tsGzw2A0aFcUrPvVTNN02AADqyh1niQYNITTRvh5otatqXwqdqghAA
+	⚠ Please be aware that this chart is not an official demo of Apache ECharts but is made by user-generated code.
+-->
+<!DOCTYPE html>
+<html lang="en" style="height: 100%">
+<head>
+  <meta charset="utf-8">
+</head>
+<body style="height: 100%; margin: 0">
+  <div id="container" style="height: 100%"></div>
+
+  
+  <script type="text/javascript" src="https://fastly.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
+  
+  <!-- Uncomment this line if you want to dataTool extension
+  <script type="text/javascript" src="https://fastly.jsdelivr.net/npm/echarts@5/dist/extension/dataTool.min.js"></script>
+  -->
+  <!-- Uncomment this line if you want to use gl extension
+  <script type="text/javascript" src="https://echarts.apache.org/en/js/vendors/echarts-gl/dist/echarts-gl.min.js"></script>
+  -->
+  <!-- Uncomment this line if you want to echarts-stat extension
+  <script type="text/javascript" src="https://echarts.apache.org/en/js/vendors/echarts-stat/dist/ecStat.min.js"></script>
+  -->
+  <!-- Uncomment this line if you want to echarts-graph-modularity extension
+  <script type="text/javascript" src="https://echarts.apache.org/en/js/vendors/echarts-graph-modularity/dist/echarts-graph-modularity.min.js"></script>
+  -->
+  <!-- Uncomment this line if you want to use map
+  <script type="text/javascript" src="https://fastly.jsdelivr.net/npm/echarts@4.9.0/map/js/world.js"></script>
+  -->
+  <!-- Uncomment these two lines if you want to use bmap extension
+  <script type="text/javascript" src="https://api.map.baidu.com/api?v=3.0&ak=YOUR_API_KEY"></script>
+  <script type="text/javascript" src="https://fastly.jsdelivr.net/npm/echarts@5/dist/extension/bmap.min.js"></script>
+  -->
+
+  <script type="text/javascript">
+    var dom = document.getElementById('container');
+    var myChart = echarts.init(dom, null, {
+      renderer: 'canvas',
+      useDirtyRect: false
+    });
+    var app = {};
+    
+    var option;
+
+    var classNames = ['Class A', 'Class B', 'Class C', 'Class D'];
+
+        // Define confusion matrix (Example Data)
+        var cm = [
+            [10, 2, 1, 0],  // Row 0
+            [3, 15, 2, 1],  // Row 1
+            [0, 4, 8, 2],   // Row 2
+            [1, 1, 3, 12]   // Row 3
+        ];
+
+        // Convert cm into ECharts format [x, y, value]
+        var heatmapData = [];
+        for (var i = 0; i < cm.length; i++) {
+            for (var j = 0; j < cm[i].length; j++) {
+                heatmapData.push([j, i, cm[i][j]]);
+            }
+        }
+
+        // Define ECharts options
+        var option = {
+            tooltip: {
+                position: 'top',
+                formatter: function(params) {
+                    return `Predicted: ${classNames[params.data[0]]} <br> Actual: ${classNames[params.data[1]]} <br> Count: ${params.data[2]}`;
+                }
+            },
+            xAxis: {
+                type: 'category',
+                data: classNames,
+                name: 'Predicted Label'
+            },
+            yAxis: {
+                type: 'category',
+                data: classNames,
+                name: 'Actual Label'
+            },
+            visualMap: {
+                min: 0,
+                max: 20,
+                calculable: true,
+                orient: 'vertical',
+                left: 'right',
+                top: 'center',
+                inRange: {
+                    color: ['#f7fbff', '#4292c6']  // Light to dark blue (similar to `Blues` cmap in Seaborn)
+                }
+            },
+            series: [{
+                name: 'Confusion Matrix',
+                type: 'heatmap',
+                data: heatmapData,
+                label: {
+                    show: true,
+                    color: 'black'
+                },
+                emphasis: {
+                    itemStyle: {
+                        borderColor: '#333',
+                        borderWidth: 1
+                    }
+                }
+            }]
+        };
+
+    if (option && typeof option === 'object') {
+      myChart.setOption(option);
+    }
+
+    window.addEventListener('resize', myChart.resize);
+  </script>
+</body>
+</html>

@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!--start of custom scripts-->
+    <script type="text/javascript" src="https://fastly.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <!--end of custom scripts-->
+    
+    <title>Analysis Results</title>
+    <style>
+        body {
+            text-align: center;
+            background-image: url("{{ url_for('static', filename='img/bg1.png') }}");
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            padding: 10px;
+            color: #062aab;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            margin: 0;
+        }
+        .headline { font-size: 5rem; margin: 50px; }
+        .subheadline { font-size: 1.2rem; margin: 50px; }
+        .results-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        .result-item {
+            background-color: #1e293b;
+            padding: 20px;
+            color: #ffffff;
+            border-radius: 10px;
+            width: 200px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+        .result-item h2 { font-size: 1.5rem; }
+        .result-item p { font-size: 1.2rem; font-weight: bold; color: #3b82f6; }
+        .visualization-button {
+            background-color: #3b82f6;
+            color: #ffffff;
+            padding: 6px 12px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+        .chatgpt-logo-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: 60px;
+            height: 60px;
+            cursor: pointer;
+        }
+        .home-icon {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: #1f2937;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <!--Container start-->
+    <div class="container mt-5">
+        <!--Row starts-->
+        <div class="row justify-content-center">
+
+            <!--Accuracy cards starts -->
+            <div class="col-sm-3">
+                <div class="card">
+                    <div class="card-body">
+                        <div>
+                            <h5 class="text-muted header-title mt-0">Accuracy</h5>
+                            <h4 class="mt-1 mb-0">{{metrics['accuracy']}}</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--Accuracy cards ends-->
+            <!--Precision cards starts-->
+            <div class="col-sm-3">
+                <div class="card">
+                    <div class="card-body">
+                        <div>
+                            <h5 class="text-muted header-title mt-0">Precision</h5>
+                            <h4 class="mt-1 mb-0">{{metrics['precision']}}</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--Precision cards ends-->
+            <!--Recall cards starts-->
+            <div class="col-sm-3">
+                <div class="card">
+                    <div class="card-body">
+                        <div>
+                            <h5 class="text-muted header-title mt-0">Recall</h5>
+                            <h4 class="mt-1 mb-0">{{metrics['recall']}}</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <!--Recall cards ends-->
+            <!--F1 Score cards starts-->
+            <div class="col-sm-3">
+                <div class="card">
+                    <div class="card-body">
+                        <div>
+                            <h5 class="text-muted header-title mt-0">F1 score</h5>
+                            <h4 class="mt-1 mb-0">{{metrics['f1_score']}}</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--F1 Score cards ends-->
+        </div>
+        <!--Row ends-->
+
+        <!--Row starts-->
+        <div class="row justify mt-3">
+
+            <!-- Confusion matrix Viz starts-->
+            <div class="col-sm-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="text-muted header-title mt-0">CONFUSION MATRIX <h5>
+                        <div id="confusionMatrix" style="height: 450px; width: 100%;"></div>
+                        <script type="text/javascript">
+                            var dom = document.getElementById('confusionMatrix');
+                            var myChart = echarts.init(dom, null, {
+                              renderer: 'canvas',
+                              useDirtyRect: false
+                            });
+                            var app = {};
+                            
+                            var option;
+                        
+                            var classNames = {{class_names}};
+                        
+                                // Define confusion matrix (Example Data)
+                                var cm = {{cm}};
+                        
+                                // Convert cm into ECharts format [x, y, value]
+                                var heatmapData = [];
+                                for (var i = 0; i < cm.length; i++) {
+                                    for (var j = 0; j < cm[i].length; j++) {
+                                        heatmapData.push([j, i, cm[i][j]]);
+                                    }
+                                }
+                        
+                                // Define ECharts options
+                                var option = {
+                                    tooltip: {
+                                        position: 'top',
+                                        formatter: function(params) {
+                                            return `Predicted: ${classNames[params.data[0]]} <br> Actual: ${classNames[params.data[1]]} <br> Count: ${params.data[2]}`;
+                                        }
+                                    },
+                                    toolbox: {
+                                        show: true,
+                                        feature: {
+                                        mark: { show: true },
+                                        dataView: { show: true, readOnly: false },
+                                        magicType: { show: false, type: ['line', 'bar'] },
+                                        restore: { show: true },
+                                        saveAsImage: { show: true }
+                                        }
+                                    },
+                                    calculable: true,
+                                    xAxis: {
+                                        type: 'category',
+                                        data: classNames,
+                                        name: 'Predicted Label'
+                                    },
+                                    yAxis: {
+                                        type: 'category',
+                                        data: classNames,
+                                        name: 'Actual Label'
+                                    },
+                                    visualMap: {
+                                        min: {{cmLowValue}},
+                                        max: {{cmHighValue}},
+                                        calculable: true,
+                                        orient: 'vertical',
+                                        left: 'right',
+                                        top: 'center',
+                                        inRange: {
+                                            color: ['#f7fbff', '#4292c6']  // Light to dark blue (similar to `Blues` cmap in Seaborn)
+                                        }
+                                    },
+                                    series: [{
+                                        name: 'Confusion Matrix',
+                                        type: 'heatmap',
+                                        data: heatmapData,
+                                        label: {
+                                            show: true,
+                                            color: 'black'
+                                        },
+                                        emphasis: {
+                                            itemStyle: {
+                                                borderColor: '#333',
+                                                borderWidth: 1
+                                            }
+                                        }
+                                    }]
+                                };
+                        
+                            if (option && typeof option === 'object') {
+                              myChart.setOption(option);
+                            }
+                        
+                            window.addEventListener('resize', myChart.resize);
+                          </script>
+                    </div>
+                </div>
+            </div>
+            <!-- Confusion matrix Viz ends-->
+
+            <!-- AUC - ROC curve Viz starts-->
+            <div class="col-sm-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="text-muted header-title mt-0">ROC CURVE <h5>
+                        <div id="rocAucCurve" style="height: 450px; width: 100%;"></div>
+                        <script>
+                            // Initialize the chart
+                            var chart = echarts.init(document.getElementById('rocAucCurve'));
+                    
+                            // Define the chart options
+                            var rocData = [
+                                    {% for class in rocPlot %}
+                                        { name: "{{class['name']}}", fpr:{{class['fpr']}}, tpr: {{class['tpr']}} },
+                                    {% endfor %}
+                                    ];
+
+                                    // Convert data to series format
+                                    var seriesData = rocData.map(classData => ({
+                                        name: classData.name,
+                                        type: 'line',
+                                        data: classData.fpr.map((x, idx) => [x, classData.tpr[idx]]),
+                                        smooth: true
+                                    }));
+
+                                    // Define the chart options
+                                    var options = {
+                                       
+                                        tooltip: {
+                                            trigger: 'axis',
+                                            formatter: function (params) {
+                                                let content = `${params[0].axisValue}<br/>`;
+                                                params.forEach(param => {
+                                                    content += `${param.marker} ${param.seriesName}: (${param.data[0].toFixed(2)}, ${param.data[1].toFixed(2)})<br/>`;
+                                                });
+                                                return content;
+                                            }
+                                        },
+                                        toolbox: {
+                                            show: true,
+                                            feature: {
+                                            mark: { show: true },
+                                            dataView: { show: true, readOnly: false },
+                                            magicType: { show: false, type: ['line', 'bar'] },
+                                            restore: { show: true },
+                                            saveAsImage: { show: true }
+                                            }
+                                        },
+                                        calculable: true,
+                                        legend: {
+                                            data: rocData.map(classData => classData.name),
+                                            bottom: 10
+                                        },
+                                        xAxis: {
+                                            type: 'value',
+                                            name: 'False Positive Rate',
+                                            min: 0,
+                                            max: 1
+                                        },
+                                        yAxis: {
+                                            type: 'value',
+                                            name: 'True Positive Rate',
+                                            min: 0,
+                                            max: 1
+                                        },
+                                        series: [
+                                            ...seriesData,
+                                            { // Diagonal reference line
+                                                name: 'Random Guess (AUC = 0.50)',
+                                                type: 'line',
+                                                data: [[0, 0], [1, 1]],
+                                                lineStyle: { type: 'dashed' },
+                                                color: 'black'
+                                            }
+                                        ]
+                                    };
+                            // Set the options
+                            chart.setOption(options);
+                        </script>
+                        
+                    </div>
+                </div>
+            </div>
+            <!-- AUC - ROC curve Viz ends-->
+
+        </div>
+        <!--Row ends-->
+
+        <!--Row starts-->
+        <div class="row justify mt-3">
+
+            <!-- Precision -Recall Curve Viz starts-->
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="card-body">
+                            <h5 class="text-muted header-title mt-0">Precision and Recall Curve <h5>
+                            <div id="prCurve" style="height: 450px; width: 100%;"></div>
+                            <script>
+                                // Initialize the chart
+                                var chart = echarts.init(document.getElementById('prCurve'));
+                        
+                                // Example Precision-Recall Curve data (Replace this with actual values)
+                                var prData = [
+                                {% for class in prCurve %}
+                                    { name: "{{class['name']}}", recall:{{class['recall']}}, precision: {{class['precision']}} },
+                                {% endfor %}
+                                ];
+                        
+                                // Convert data to series format
+                                var seriesData = prData.map(classData => ({
+                                    name: classData.name,
+                                    type: 'line',
+                                    data: classData.recall.map((x, idx) => [x, classData.precision[idx]]),
+                                    smooth: true
+                                }));
+                        
+                                // Define the chart options
+                                var options = {
+                                    tooltip: {
+                                        trigger: 'axis',
+                                        formatter: function (params) {
+                                            let content = `${params[0].axisValue}<br/>`;
+                                            params.forEach(param => {
+                                                content += `${param.marker} ${param.seriesName}: (Recall=${param.data[0].toFixed(2)}, Precision=${param.data[1].toFixed(2)})<br/>`;
+                                            });
+                                            return content;
+                                        }
+                                    },
+                                    toolbox: {
+                                            show: true,
+                                            feature: {
+                                            mark: { show: true },
+                                            dataView: { show: true, readOnly: false },
+                                            magicType: { show: false, type: ['line', 'bar'] },
+                                            restore: { show: true },
+                                            saveAsImage: { show: true }
+                                            }
+                                        },
+                                        calculable: true,
+                                    legend: {
+                                        data: prData.map(classData => classData.name),
+                                        bottom: 10
+                                    },
+                                    xAxis: {
+                                        type: 'value',
+                                        name: 'Recall',
+                                        min: 0,
+                                        max: 1
+                                    },
+                                    yAxis: {
+                                        type: 'value',
+                                        name: 'Precision',
+                                        min: 0,
+                                        max: 1
+                                    },
+                                    dataZoom: [
+                                                {
+                                                    type: 'slider', // Horizontal zoom slider
+                                                    start: 0,
+                                                    end: 100,
+                                                    xAxisIndex: 0 // Controls the x-axis
+                                                },
+                                                {
+                                                    type: 'slider', // Vertical zoom slider
+                                                    start: 0,
+                                                    end: 100,
+                                                    yAxisIndex: 0 // Controls the y-axis
+                                                },
+                                                {
+                                                    type: 'inside', // Enables zooming using the mouse wheel
+                                                    xAxisIndex: 0,
+                                                    yAxisIndex: 0
+                                                }
+                                            ],
+                                    series: seriesData
+                                };
+                        
+                                // Set the options
+                                chart.setOption(options);
+                            </script>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Precision -Recall Curve ends-->
+
+        </div>
+        <!--Row ends-->
+
+
+
+    </div>
+    <!--Container ends-->
+
+
+
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script>
+        function loadHTML(containerId, filePath) {
+            fetch(filePath)
+                .then(response => response.text())
+                .then(data => document.getElementById(containerId).innerHTML = data)
+                .catch(error => console.error("Error loading " + filePath, error));
+        }
+
+        // Load Navbar and Footer
+        loadHTML("navbar-container", "/static/navbar.html");
+        loadHTML("footer-container", "/static/footer.html");
+    </script>
+</body>
+</html>

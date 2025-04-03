@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
+    <title>ECharts Line Chart</title>
+</head>
+<body>
+    <div id="chart" style="width: 600px; height: 400px;"></div>
+
+    <script>
+        // Initialize the chart
+        var chart = echarts.init(document.getElementById('chart'));
+
+        // Define the chart options
+        var options = {
+            title: {
+                text: 'Line Plot Example'
+            },
+            tooltip: {
+                trigger: 'axis'
+            },
+            legend: {
+                data: ['Class 1']
+            },
+            xAxis: {
+                type: 'category',
+                data: [1, 2, 3]
+            },
+            yAxis: {
+                type: 'value'
+            },
+            series: [{
+                name: 'Class 1',
+                type: 'line',
+                data: [2, 3, 6],
+                smooth: true
+            }]
+        };
+
+        // Set the options
+        chart.setOption(options);
+    </script>
+</body>
+</html>

@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!--start of custom scripts-->
+    <script type="text/javascript" src="https://fastly.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <!--end of custom scripts-->
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <title>Analysis Results</title>
+    <style>
+        body {
+            text-align: center;
+            background-image: url("{{ url_for('static', filename='img/bg1.png') }}");
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            padding: 10px;
+            color: #062aab;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            margin: 0;
+        }
+        .headline { font-size: 5rem; margin: 50px; }
+        .subheadline { font-size: 1.2rem; margin: 50px; }
+        .results-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        .result-item {
+            background-color: #1e293b;
+            padding: 20px;
+            color: #ffffff;
+            border-radius: 10px;
+            width: 200px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+        .result-item h2 { font-size: 1.5rem; }
+        .result-item p { font-size: 1.2rem; font-weight: bold; color: #3b82f6; }
+        .visualization-button {
+            background-color: #3b82f6;
+            color: #ffffff;
+            padding: 6px 12px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+        .chatgpt-logo-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: 60px;
+            height: 60px;
+            cursor: pointer;
+        }
+        .home-icon {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: #1f2937;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+        }
+        {% include "/includes/navbarCSS.html" %}
+        {% include "/includes/footerCSS.html" %}
+        
+
+    </style>
+</head>
+<body>
+
+        <!-- Navbar -->
+        {% include "/includes/navbar.html" %}
+        <!-- Navbar ends -->
+
+<!-- Navbar -->
+    <!-- <div id="navbar-container"></div> -->
+    <!--Container start-->
+    <div class="container mt-5">
+        <!--Row starts-->
+        <div class="row justify-content-center">
+
+            <!--R2 cards starts -->
+            <div class="col-sm-3">
+                <div class="card">
+                    <div class="card-body">
+                        <div>
+                            <h5 class="text-muted header-title mt-0">R2 score</h5>
+                            <h4 class="mt-1 mb-0">{{metrics['R2']}}</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--R2 cards ends-->
+            <!--MSE cards starts-->
+            <div class="col-sm-3">
+                <div class="card">
+                    <div class="card-body">
+                        <div>
+                            <h5 class="text-muted header-title mt-0">MSE</h5>
+                            <h4 class="mt-1 mb-0">{{metrics['MSE']}}</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--MSE cards ends-->
+            <!--RMSE cards starts-->
+            <div class="col-sm-3">
+                <div class="card">
+                    <div class="card-body">
+                        <div>
+                            <h5 class="text-muted header-title mt-0">RMSE</h5>
+                            <h4 class="mt-1 mb-0">{{metrics['RMSE']}}</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--RMSE cards ends-->
+            <!--MAE  cards starts-->
+            <div class="col-sm-3">
+                <div class="card">
+                    <div class="card-body">
+                        <div>
+                            <h5 class="text-muted header-title mt-0">MAE</h5>
+                            <h4 class="mt-1 mb-0">{{metrics['MAE']}}</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--MAE cards ends-->
+        </div>
+        <!--Row ends-->
+
+        <!--Row starts-->
+        <div class="row justify mt-3">
+
+            <!-- Actual vs Predicted Viz starts-->
+            <div class="col-sm-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="text-muted header-title mt-0">ACTUAL VS PREDICTED <h5>
+                        <div id="actualVSPred" style="height: 450px; width: 100%;"></div>
+                        <script type="text/javascript">
+                            var dom = document.getElementById('actualVSPred');
+                            var myChart = echarts.init(dom, null, {
+                              renderer: 'canvas',
+                              useDirtyRect: false
+                            });
+                            var app = {};
+                            
+                            var option;
+                        
+                            // const markLineOpt = {
+                            // animation: false,
+                            // label: {
+                            //     show: true,
+                            //     formatter: 'Perfect Fit',
+                            //     align: 'right'
+                            // },
+                            // lineStyle: {
+                            //     type: 'dashed'
+                            // },
+                            // tooltip: {
+                            //     formatter: 'Perfect Fit Line'
+                            // },
+                            // data: [
+                            //     [
+                            //     {
+                            //         coord: [{{ y_test_min }}, {{ y_test_min }}], // (min, min)
+                            //         symbol: 'none'
+                            //     },
+                            //     {
+                            //         coord: [{{ y_test_max }}, {{ y_test_max }}], // (max, max)
+                            //         symbol: 'none'
+                            //     }
+                            //     ]
+                            // ]
+                            // };
+
+                            option = {
+                            tooltip: {
+                                trigger: 'item'
+                            },
+                            toolbox: {
+                                show: true,
+                                feature: {
+                                mark: { show: true },
+                                dataView: { show: true, readOnly: false },
+                                magicType: { show: false, type: ['line', 'bar'] },
+                                restore: { show: true },
+                                saveAsImage: { show: true }
+                                }
+                            },
+                            calculable: true,
+                            legend: {
+                                top: '5%',
+                                left: 'center',
+                                data: ['Predicted', 'Perfect Fit Line'] // Add legend entries
+                            },
+                            xAxis: {
+                                name: 'Actual Values'
+                            },
+                            yAxis: {
+                                name: 'Predicted Values'
+                            },
+                            series: [
+                                {
+                                name: 'Predicted',  // Scatter plot legend label
+                                symbolSize: 10,
+                                type: 'scatter',
+                                data: [
+                                    {% for y_test, y_pred in zipped %}
+                                    [{{ y_test }}, {{ y_pred }}],
+                                    {% endfor %}
+                                ]
+                                },
+                                {
+                                name: 'Perfect Fit Line',  // Add perfect fit as a separate series
+                                type: 'line',
+                                lineStyle: {
+                                    type: 'dashed',
+                                    color: 'red'
+                                },
+                                symbol: 'none',
+                                tooltip: {
+                                    show: 'true',
+                                formatter: 'Perfect Fit Line'
+                                 },
+                                 label: {
+                                    show: true,
+                                    formatter: 'Perfect Fit',
+                                    align: 'right'
+                                },
+                                data: [
+                                    [{{ y_test_min }}, {{ y_test_min }}],  // Start point (min, min)
+                                    [{{ y_test_max }}, {{ y_test_max }}]   // End point (max, max)
+                                ]
+                                }
+                            ]
+                            };
+                        
+                        
+                            if (option && typeof option === 'object') {
+                              myChart.setOption(option);
+                            }
+                        
+                            window.addEventListener('resize', myChart.resize);
+                          </script>
+                    </div>
+                </div>
+            </div>
+            <!-- Actual vs Predicted Viz ends-->
+
+            <!-- Residual Viz starts-->
+            <div class="col-sm-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="text-muted header-title mt-0"> RESIDUAL </h5>
+                        <div id="residual" style="height: 450px; width: 100%;"></div>
+                        
+                        <script>
+                            // Initialize ECharts instance
+                            var chart = echarts.init(document.getElementById('residual'));
+                    
+                            // Define histogram bins and frequencies
+                            
+                            
+                            var bins = {{bin}}; // Bin ranges
+                            var frequencies = {{freq}}; // Frequency of each bin
+                    
+                            // Configure ECharts options
+                            var option = {
+                                
+                                tooltip: {
+                                    trigger: 'axis'
+                                },
+                                toolbox: {
+                                    show: true,
+                                    feature: {
+                                    mark: { show: true },
+                                    dataView: { show: true, readOnly: false },
+                                    magicType: { show: false, type: ['line', 'bar'] },
+                                    restore: { show: true },
+                                    saveAsImage: { show: true }
+                                    }
+                                },
+                                calculable: true,
+                                xAxis: {
+                                    type: 'category',  // Bins as categories
+                                    data: bins
+                                },
+                                yAxis: {
+                                    type: 'value',
+                                    name: 'Frequency'
+                                },
+                                series: [{
+                                    type: 'bar',
+                                    data: frequencies,
+                                    barWidth: '50%',
+                                    itemStyle: {
+                                        color: '#3498db'  // Customize bar color
+                                    },
+                                    markLine: {
+                                        data: [
+                                            { 
+                                                xAxis: 0,  // Place vertical line at the "0-10" bin
+                                                lineStyle: {
+                                                    type: 'dashed',
+                                                    color: 'red',
+                                                    width: 2
+                                                },
+                                                label: {
+                                                    formatter: 'Threshold', // Label for the line
+                                                    position: 'end'
+                                                }
+                                            }
+                                        ]
+                                    }
+                                }]
+                            };
+                    
+                            // Render the chart
+                            chart.setOption(option);
+                        </script>
+                    </div>
+                </div>
+            </div>
+            <!-- Residual Viz ends-->
+
+        </div>
+        <!--Row ends-->
+        
+    </div>
+    <!--Container ends-->
+
+        <!-- Footer -->
+        {% include "/includes/footer.html" %}
+        <!--Footer ends-->
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="https://fastly.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
+    <script>
+        function loadHTML(containerId, filePath) {
+            fetch(filePath)
+                .then(response => response.text())
+                .then(data => document.getElementById(containerId).innerHTML = data)
+                .catch(error => console.error("Error loading " + filePath, error));
+        }
+
+        // Load Navbar and Footer
+        loadHTML("navbar-container", "/static/navbar.html");
+        loadHTML("footer-container", "/static/footer.html");
+    </script>
+</body>
+</html>
+
+
+
+

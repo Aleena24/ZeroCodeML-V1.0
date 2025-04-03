@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Supervised Learning Algorithms | ZeroCodeML</title>
+    <style>
+        /* ===== Global Styles ===== */
+        :root {
+            --primary: #063979;
+            --secondary: #4e73df;
+            --light: #f8f9fc;
+            --dark: #5a5c69;
+            --success: #1cc88a;
+            --info: #36b9cc;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f8f9fa;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* ===== Header Styles ===== */
+        .article-header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 30px 0;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .article-header h1 {
+            font-size: 2.8rem;
+            margin-bottom: 15px;
+        }
+
+        .article-header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* ===== Main Content Styles ===== */
+        .algorithm-categories {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            justify-content: center;
+            margin-bottom: 50px;
+        }
+
+        /* Parent Box Styles */
+        .category-box {
+            width: 350px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .category-box:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .category-box.active {
+            width: 100%;
+            max-width: 1000px;
+            z-index: 10;
+        }
+
+        .category-header {
+            background: var(--primary);
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .category-header h2 {
+            font-size: 1.8rem;
+        }
+
+        .category-content {
+            padding: 20px;
+            display: none;
+        }
+
+        .category-box.active .category-content {
+            display: block;
+        }
+
+        .category-description {
+            margin-bottom: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        @media (min-width: 768px) {
+            .category-description {
+                flex-direction: row;
+            }
+        }
+
+        .category-description img {
+            width: 100%;
+            max-width: 300px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .category-description p {
+            flex: 1;
+            font-size: 1.1rem;
+        }
+
+        /* Child Algorithm Boxes */
+        .algorithms-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .algorithm-box {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+            padding: 20px;
+            transition: all 0.3s ease;
+            border-left: 4px solid var(--primary);
+        }
+
+        .algorithm-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+        }
+
+        .algorithm-box h3 {
+            color: var(--primary);
+            margin-bottom: 10px;
+            font-size: 1.3rem;
+        }
+
+        .algorithm-box p {
+            color: var(--dark);
+            font-size: 0.95rem;
+        }
+
+        .algorithm-box .algorithm-details {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+        }
+
+        .algorithm-box.active .algorithm-details {
+            max-height: 500px;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #eee;
+        }
+
+        /* Back Button */
+        .back-button {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .back-button:hover {
+            background: var(--secondary);
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {
+            .article-header h1 {
+                font-size: 2rem;
+            }
+            
+            .category-box {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Article Header -->
+    <header class="article-header">
+        <div class="container">
+            <h1>Supervised Learning Algorithms</h1>
+            <p>Explore the fundamental algorithms that power predictive modeling in machine learning</p>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container">
+        <div class="algorithm-categories">
+            <!-- Regression Box -->
+            <div class="category-box" id="regression-box">
+                <div class="category-header">
+                    <h2>Regression</h2>
+                </div>
+                <div class="category-content">
+                    <div class="category-description">
+                        <img src="https://miro.medium.com/v2/resize:fit:1400/1*9h-WaQh6Y0VJ2kK1x7Z5Xg.png" alt="Regression Visualization">
+                        <p>
+                            Regression algorithms predict continuous output values based on input features. They model the relationship 
+                            between a dependent (target) variable and one or more independent variables. Regression is widely used 
+                            for forecasting, trend analysis, and determining the strength of predictors. Key metrics include R-squared, 
+                            MSE, and RMSE.
+                        </p>
+                    </div>
+                    
+                    <div class="algorithms-container">
+                        <!-- Linear Regression -->
+                        <div class="algorithm-box">
+                            <h3>Linear Regression</h3>
+                            <p>Models the linear relationship between variables</p>
+                            <div class="algorithm-details">
+                                <p>Finds the best-fit straight line through data points by minimizing the sum of squared residuals. Assumes linearity, independence, homoscedasticity, and normal distribution of residuals. Sensitive to outliers.</p>
+                                <p><strong>Equation:</strong> y = β₀ + β₁x₁ + ... + βₙxₙ</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Lasso Regression -->
+                        <div class="algorithm-box">
+                            <h3>Lasso Regression</h3>
+                            <p>Linear regression with L1 regularization</p>
+                            <div class="algorithm-details">
+                                <p>Adds penalty equal to absolute value of coefficients (L1 norm). Performs feature selection by shrinking some coefficients to zero. Useful for high-dimensional data with many features.</p>
+                                <p><strong>Equation:</strong> min(‖y - Xβ‖² + λ‖β‖₁)</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Ridge Regression -->
+                        <div class="algorithm-box">
+                            <h3>Ridge Regression</h3>
+                            <p>Linear regression with L2 regularization</p>
+                            <div class="algorithm-details">
+                                <p>Adds penalty equal to square of coefficients (L2 norm). Shrinks coefficients but doesn't eliminate them. Handles multicollinearity well. Better when most features are useful.</p>
+                                <p><strong>Equation:</strong> min(‖y - Xβ‖² + λ‖β‖₂²)</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Elastic Net -->
+                        <div class="algorithm-box">
+                            <h3>Elastic Net</h3>
+                            <p>Combination of L1 and L2 regularization</p>
+                            <div class="algorithm-details">
+                                <p>Balances between Lasso and Ridge. Useful when there are multiple correlated features. Combines feature selection (like Lasso) and coefficient shrinkage (like Ridge).</p>
+                                <p><strong>Equation:</strong> min(‖y - Xβ‖² + λ₁‖β‖₁ + λ₂‖β‖₂²)</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button class="back-button">Back to Categories</button>
+                </div>
+            </div>
+            
+            <!-- Classification Box -->
+            <div class="category-box" id="classification-box">
+                <div class="category-header">
+                    <h2>Classification</h2>
+                </div>
+                <div class="category-content">
+                    <div class="category-description">
+                        <img src="https://www.analyticsvidhya.com/wp-content/uploads/2015/10/Classification1.png" alt="Classification Visualization">
+                        <p>
+                            Classification algorithms predict discrete class labels. They learn decision boundaries to separate different 
+                            classes in the feature space. Used for spam detection, image recognition, medical diagnosis, etc. 
+                            Common evaluation metrics include accuracy, precision, recall, F1-score, and ROC-AUC.
+                        </p>
+                    </div>
+                    
+                    <div class="algorithms-container">
+                        <!-- Logistic Regression -->
+                        <div class="algorithm-box">
+                            <h3>Logistic Regression</h3>
+                            <p>Linear model for binary classification</p>
+                            <div class="algorithm-details">
+                                <p>Despite its name, it's a classification algorithm. Uses logistic function to model probabilities. Outputs values between 0 and 1. Works well when data is linearly separable.</p>
+                                <p><strong>Sigmoid Function:</strong> σ(z) = 1/(1 + e⁻ᶻ)</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Decision Tree -->
+                        <div class="algorithm-box">
+                            <h3>Decision Tree</h3>
+                            <p>Tree-like model of decisions</p>
+                            <div class="algorithm-details">
+                                <p>Splits data recursively based on feature values. Uses measures like Gini impurity or entropy to select splits. Easy to interpret but prone to overfitting. Works with both numerical and categorical data.</p>
+                                <p><strong>Advantage:</strong> No need for feature scaling</p>
+                            </div>
+                        </div>
+                        
+                        <!-- SVM -->
+                        <div class="algorithm-box">
+                            <h3>Support Vector Machine (SVM)</h3>
+                            <p>Finds optimal separating hyperplane</p>
+                            <div class="algorithm-details">
+                                <p>Maximizes margin between classes. Can use kernel trick for non-linear boundaries. Effective in high-dimensional spaces. Memory intensive for large datasets.</p>
+                                <p><strong>Kernels:</strong> Linear, Polynomial, RBF, Sigmoid</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Random Forest -->
+                        <div class="algorithm-box">
+                            <h3>Random Forest</h3>
+                            <p>Ensemble of decision trees</p>
+                            <div class="algorithm-details">
+                                <p>Builds multiple trees with random subsets of features/data. Averages predictions (classification: majority vote). Reduces overfitting through ensemble methods. Provides feature importance scores.</p>
+                                <p><strong>Key Parameter:</strong> Number of trees</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Gradient Boosting -->
+                        <div class="algorithm-box">
+                            <h3>Gradient Boosting</h3>
+                            <p>Sequential correction of errors</p>
+                            <div class="algorithm-details">
+                                <p>Builds trees sequentially where each tree corrects errors of previous ones. Optimizes arbitrary differentiable loss functions. Popular implementations include XGBoost, LightGBM, and CatBoost.</p>
+                                <p><strong>Advantage:</strong> Often achieves highest accuracy</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button class="back-button">Back to Categories</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Handle category box clicks
+        document.querySelectorAll('.category-box').forEach(box => {
+            box.addEventListener('click', function(e) {
+                // Don't activate if clicking on child algorithm box or back button
+                if (e.target.closest('.algorithm-box') || e.target.classList.contains('back-button')) return;
+                
+                // Close all other boxes
+                document.querySelectorAll('.category-box').forEach(otherBox => {
+                    if (otherBox !== this) {
+                        otherBox.classList.remove('active');
+                    }
+                });
+                
+                // Toggle current box
+                this.classList.toggle('active');
+            });
+        });
+
+        // Handle algorithm box clicks
+        document.querySelectorAll('.algorithm-box').forEach(box => {
+            box.addEventListener('click', function() {
+                this.classList.toggle('active');
+            });
+        });
+
+        // Handle back button clicks
+        document.querySelectorAll('.back-button').forEach(button => {
+            button.addEventListener('click', function(e) {
+                e.stopPropagation();
+                this.closest('.category-box').classList.remove('active');
+            });
+        });
+    </script>
+</body>
+</html>

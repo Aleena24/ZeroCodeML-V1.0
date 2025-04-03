@@ -1,0 +1,128 @@
+<!--
+	THIS EXAMPLE WAS DOWNLOADED FROM https://echarts.apache.org/examples/en/editor.html?c=scatter-simple&code=MYewdgzgLgBAtgQwE4GsAyBLMBTA8gB1gF4YBvAWACgYYEwNEoNwAuGAMwQBsJsAaKjS4IARti5sK1GjAgALEAHc2nHv0Ez2IJIyjYkbAOQAFfe2zBYAMQxRDA6TW4YA5mCNJXcuxoC-DoSxsAGUoAE8ubEkNGnD8KJhDABMEeWwkwz8AmCgQEC4mfGjHDm1dfSNTJHNLGBtYTBxM6X8NFKgENgBtGJgekpopGWGYUG0k7oAGPhgAJgBdbJHZMLgRfKMwcGxm5daBsl7hsaQJvoA2SauZgA5Fo5kIVfWJRK2mh99e-Y0fyl8ANxUKggQjMMAwEhDHJ5AoYIqHEpQTwuFwVRK2bBwXYwfaxWHrAAexWG8iUbGRAFd1CVzAgoJSkAlocNEKhJLIFMockhqbiljJ2ggAGoYbDc0ic8k86kzJkIJK4MBcMIqbi8fkPRAuDDAAAqYXiHLJ3NUvBmcQSXUMXCC9kSImQhnmmoOTOg2mZUu5VOwruWEAQADdsABBCAASW1XpNFN5fq-JUTNDxo24wEpwhEkTjso0kTRYDOLJhCMMAFYAKT2XqRdhQIzAbBgPRIGslIXdExMpK6vQZGYmMwWay2GCNHZ_FPZQmhwkYCAkmRgBBwBKGAAaAFo5wucamwrvF4jhiu10YAJo7-cQffZXiebDH_rDEs0M_r4w9vvpe0wAD0_4wMEwD0q2MD4FwICwAWzZJDAWbiA8TxrPkwQYAAXgkACM0wPJ2fQPDQXTnOcNwAJwzFukwAHSTAA7AAzNhAAs9wHMRrEsfRVG0QxzFsQKwxdOR2E3NMMDUXRTGsexyzEecjHlhJ2HSQJcnyV02GqRJNw0YxjEacsWksXRMz0TRpFGSMWmMTRLEzOcNE3NhU4jNZsSGuuECgVArbtssbLoEEbBBROBBQEJMiATAH6VMOtT1OOdoAUBAAiqRyOkCFBAh2CFvBiFcA8vTJjAfyAkAA
+	⚠ Please be aware that this chart is not an official demo of Apache ECharts but is made by user-generated code.
+-->
+<!DOCTYPE html>
+<html lang="en" style="height: 100%">
+<head>
+  <meta charset="utf-8">
+</head>
+<body style="height: 100%; margin: 0">
+  <div id="container" style="height: 100%"></div>
+
+  
+  <script type="text/javascript" src="https://fastly.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
+  
+  <!-- Uncomment this line if you want to dataTool extension
+  <script type="text/javascript" src="https://fastly.jsdelivr.net/npm/echarts@5/dist/extension/dataTool.min.js"></script>
+  -->
+  <!-- Uncomment this line if you want to use gl extension
+  <script type="text/javascript" src="https://echarts.apache.org/en/js/vendors/echarts-gl/dist/echarts-gl.min.js"></script>
+  -->
+  <!-- Uncomment this line if you want to echarts-stat extension
+  <script type="text/javascript" src="https://echarts.apache.org/en/js/vendors/echarts-stat/dist/ecStat.min.js"></script>
+  -->
+  <!-- Uncomment this line if you want to echarts-graph-modularity extension
+  <script type="text/javascript" src="https://echarts.apache.org/en/js/vendors/echarts-graph-modularity/dist/echarts-graph-modularity.min.js"></script>
+  -->
+  <!-- Uncomment this line if you want to use map
+  <script type="text/javascript" src="https://fastly.jsdelivr.net/npm/echarts@4.9.0/map/js/world.js"></script>
+  -->
+  <!-- Uncomment these two lines if you want to use bmap extension
+  <script type="text/javascript" src="https://api.map.baidu.com/api?v=3.0&ak=YOUR_API_KEY"></script>
+  <script type="text/javascript" src="https://fastly.jsdelivr.net/npm/echarts@5/dist/extension/bmap.min.js"></script>
+  -->
+
+  <script type="text/javascript">
+    var dom = document.getElementById('container');
+    var myChart = echarts.init(dom, null, {
+      renderer: 'canvas',
+      useDirtyRect: false
+    });
+    var app = {};
+    
+    var option;
+
+    const markLineOpt = {
+  animation: false,
+  label: {
+    show: false,
+    formatter: 'Perfect Fit',
+    align: 'right'
+  },
+  lineStyle: {
+    type: 'dashed'
+  },
+  tooltip: {
+    formatter: 'Perfect Fit Line'
+  },
+  data: [
+    [
+      {
+        coord: [0, 2],
+        symbol: 'none'
+      },
+      {
+        coord: [6000, 8],
+        symbol: 'none'
+      }
+    ]
+  ]
+};
+
+option = {
+  tooltip: {
+    trigger: 'item'
+  },
+  toolbox: {
+    show: true,
+    feature: {
+      mark: { show: true },
+      dataView: { show: true, readOnly: false },
+      magicType: { show: false, type: ['line', 'bar'] },
+      restore: { show: true },
+      saveAsImage: { show: true }
+    }
+  },
+  calculable: true,
+  legend: {
+    top: '5%',
+    left: 'center',
+    data: ['Predicted', 'Perfect Fit Line']
+  },
+  xAxis: {
+    name: 'X-Axis'
+  },
+  yAxis: {
+    name: 'Y-Axis'
+  },
+  series: [
+    {
+      name: 'Predicted',  // Scatter plot legend label
+      symbolSize: 10,
+      data: [
+        [6689, -0.07314],
+        [1447, -0.07314],
+        [9180, -0.07314],
+        [6350, 1.07314],
+        [11.0, 8.33],
+        [14.0, 7.66],
+        [13.4, 6.81]
+      ],
+      type: 'scatter',
+      markLine: markLineOpt,
+        // name: 'Perfect Fit Line' // Dashed line legend label
+      
+    }
+  ]
+};
+
+
+    if (option && typeof option === 'object') {
+      myChart.setOption(option);
+    }
+
+    window.addEventListener('resize', myChart.resize);
+  </script>
+</body>
+</html>

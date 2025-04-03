@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZeroCodeML - Upload File</title>
+
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+
+    <style>
+        /* Full height and center alignment */
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+            background: url("{{ url_for('static', filename='img/bg1.png') }}") no-repeat center center fixed;
+            background-size: cover;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Ensure Navbar & Footer Containers Take Full Width */
+        #navbar-container, #footer-container {
+            width: 100%;
+        }
+
+        /* Form Card */
+        .zerocodeml-form-card {
+            background: white;
+            border-radius: 12px;
+            padding: 50px;
+            text-align: center;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+            width: 350px;
+            margin-top: 150px; /* To ensure it doesn’t overlap with navbar */
+        }
+
+        /* File Upload Container */
+        .zerocodeml-upload-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        /* Custom File Upload Styling */
+        .zerocodeml-file-input {
+            display: none;
+        }
+
+        .zerocodeml-file-label {
+            background: #f3f3f3;
+            border: 2px dashed #007bff;
+            padding: 15px;
+            width: 100%;
+            text-align: center;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s ease;
+            font-weight: bold;
+            color: #007bff;
+        }
+
+        .zerocodeml-file-label:hover {
+            background: #e6f0ff;
+        }
+
+        /* Upload Button */
+        .zerocodeml-upload-button {
+            background: linear-gradient(to right, #007bff, #0056b3);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s ease;
+            width: 100%;
+        }
+
+        .zerocodeml-upload-button:hover {
+            background: linear-gradient(to right, #0056b3, #003f7f);
+        }
+
+        /* Error Message */
+        .zerocodeml-error-text {
+            color: red;
+            margin-top: 10px;
+        }
+
+        /* File Name Display */
+        .zerocodeml-file-name {
+            margin-top: 10px;
+            font-weight: bold;
+            color: #007bff;
+        }
+
+        {% include "/includes/navbarCSS.html" %}
+        {% include "/includes/footerCSS.html" %}
+        
+
+       
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    {% include "/includes/navbar.html" %}
+    <!-- Navbar ends -->
+
+    <!-- Upload Form -->
+    <div class="zerocodeml-form-card">
+        <h1>ZeroCodeML Workflow</h1>
+        <p>Upload Your File to Get Started</p>
+
+        <form id="uploadForm" action="{{ url_for('upload') }}" method="POST" enctype="multipart/form-data">
+            <div class="zerocodeml-upload-container">
+                <!-- Custom File Upload -->
+                <label for="fileInput" class="zerocodeml-file-label">
+                    <i class="fa-solid fa-upload"></i> Choose a File
+                </label>
+                <input type="file" id="fileInput" name="csvFile" class="zerocodeml-file-input" accept=".csv, .xlsx, .xls" onchange="displayFileName()">
+                
+                <!-- Display Selected File Name -->
+                <p id="fileNameDisplay" class="zerocodeml-file-name"></p>
+
+                <!-- Submit Button -->
+                <button type="submit" class="zerocodeml-upload-button">Submit</button>
+            </div>
+
+            <!-- Error Message -->
+            <p id="errorMessage" class="zerocodeml-error-text"></p>
+        </form>
+    </div>
+
+    <!-- Footer -->
+    {% include "/includes/footer.html" %}
+    <!--Footer ends-->
+    
+
+    <script>
+        // Function to Load External HTML Files (Navbar & Footer)
+        function loadHTML(containerId, filePath) {
+            fetch(filePath)
+                .then(response => response.text())
+                .then(data => document.getElementById(containerId).innerHTML = data)
+                .catch(error => console.error("Error loading " + filePath, error));
+        }
+
+        // Load Navbar and Footer
+        // loadHTML("navbar-container", "/static/navbar.html");
+        // loadHTML("footer-container", "/static/footer.html");
+
+        // Function to Display Uploaded File Name
+        function displayFileName() {
+            const fileInput = document.getElementById('fileInput');
+            const fileNameDisplay = document.getElementById('fileNameDisplay');
+
+            if (fileInput.files.length > 0) {
+                fileNameDisplay.textContent = "Selected File: " + fileInput.files[0].name;
+            } else {
+                fileNameDisplay.textContent = "";
+            }
+        }
+    </script>
+
+</body>
+</html>

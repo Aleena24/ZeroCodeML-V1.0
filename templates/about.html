@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - ZeROCodeML</title>
+    <style>
+        /* General Page Styles */
+        .about-page {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            padding: 0;
+            margin: 0;
+        }
+
+        /* Header Section */
+        .about-header {
+            background-color: #ffffff; /* Dark blue background */
+            color: #063979;
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        .about-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .about-header p {
+            font-size: 1.2rem;
+            margin: 0;
+        }
+
+        /* Project Overview Section */
+        .project-overview {
+            display: flex; /* Use Flexbox */
+            align-items: flex-start; /* Align items at the top */
+            justify-content: flex-start; /* Place image and text side by side */
+            gap: 20px; /* Add spacing between image and text */
+            margin: 40px auto; /* Center the section horizontally */
+            max-width: 1000px; /* Restrict the section width */
+            padding: 20px; /* Add padding for better spacing */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
+            border-radius: 10px; /* Round the edges */
+            background-color: #ffffff; /* Add a light background color */
+        }
+
+        /* Image Container */
+        .image-container {
+            flex: 0 0 250px; /* Fix the width of the image container */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .overview-image {
+            max-width: 100%; /* Ensure the image fits within its container */
+            max-height: 20%;
+            height: auto; /* Maintain the image's aspect ratio */
+            border-radius: 10px; /* Add rounded corners */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add a subtle shadow */
+        }
+
+        /* Text Content */
+        .text-content {
+            flex: 1; /* Allow text to occupy the remaining space */
+            font-size: 1.1rem; /* Adjust font size */
+            color: #333; /* Text color */
+            text-align: justify; /* Justify the text for neat alignment */
+        }
+
+        .text-content p {
+            margin-bottom: 15px; /* Add spacing between paragraphs */
+        }
+
+        .text-content strong {
+            font-weight: bold; /* Highlight important text */
+        }
+
+        /* Team Section */
+        .team-section {
+            padding: 40px 20px;
+            background-color: #f5f5f5; /* Light gray background */
+            text-align: center;
+        }
+
+        .team-section h2 {
+            font-size: 2rem;
+            margin-bottom: 30px;
+            color: #063979; /* Match the header */
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .team-member {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .team-member:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Updated: Square image display */
+        .member-image {
+            width: 100px; /* Fixed width for square */
+            height: 100px; /* Fixed height for square */
+            object-fit: cover; /* Ensure the image fills the box without distortion */
+            margin-bottom: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .team-member h3 {
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+            color: #063979;
+        }
+
+        .team-member p {
+            font-size: 1rem;
+            color: #555;
+        }
+
+        .linkedin-icon {
+            width: 24px;
+            height: 24px;
+            margin-top: 10px;
+            transition: opacity 0.3s ease;
+        }
+
+        .linkedin-icon:hover {
+            opacity: 0.7;
+        }
+    </style>
+</head>
+<body>
+    <div class="about-page">
+        <!-- Navbar (Assuming it's a separate component) -->
+        <header>
+            <!-- Replace with your actual Navbar HTML -->
+            <nav class="navbar">
+                <!-- Navbar content goes here -->
+            </nav>
+        </header>
+
+        <!-- Header Section -->
+        <section class="about-header">
+            <h1>We are Team ZeroCodeML</h1>
+            <p>
+                For our ZeroCodeML Website, our team brings together a
+                diverse set of skills and expertise, creating a dynamic and effective
+                collaboration.
+            </p>
+        </section>
+
+        <!-- Project Overview Section -->
+        <section class="project-overview">
+            <div class="image-container">
+                <img src="{{ url_for('static', filename='img/PA.jpg') }}" alt="Predictive Analysis" class="overview-image">
+            </div>
+            <div class="text-content">
+                <p>We are a team of postgraduate students from the <b>M.Sc. Artificial Intelligence 
+                and Machine Learning program at CHRIST (Deemed to be University), Bangalore.</b> 
+                We proudly present <b>ZeroCodeML, an intuitive no-code machine learning (ML)</b> 
+                platform designed to streamline the ML workflow for users with little to 
+                no programming experience. Our platform enables users to seamlessly upload 
+                datasets, perform automated exploratory data analysis (EDA), preprocess data, 
+                and generate valuable insights, predictions, and visualizations with ease.</p>
+                
+                <p>Driven by a commitment to harnessing <b>advanced AI and machine learning techniques,</b>
+                we recognized the need for a powerful yet user-friendly solution to simplify 
+                complex ML processes. <b>ZeroCodeML</b> empowers users with an efficient and intuitive 
+                platform for end-to-end machine learning model development and data analysis, 
+                eliminating the technical barriers typically associated with ML implementation.</p>
+                
+                <p>This is <b>Version 1.0</b> of <b>ZeroCodeML</b>, and we are continuously working to enhance 
+                its capabilities. Future versions will introduce expanded functionalities, 
+                improved performance, and a more refined user experience. We are committed to 
+                evolving this platform into a comprehensive ML solution that caters to a wide 
+                range of users, from beginners to experienced professionals.</p>
+                
+                <p>We appreciate your support and interest in our project and remain dedicated 
+                to advancing the field of <b>Artificial Intelligence and Machine Learning</b> through  
+                <b>innovative research and development.</b> Stay tuned for upcoming updates and enhancements!</p>
+            </div>
+        </section>
+
+        <!-- Team Section -->
+        <section class="team-section">
+            <h2>Our Team</h2>
+
+            <!-- Faculty Coordinator -->
+            <h3>Faculty Coordinator</h3>
+            <div class="team-grid">
+                <div class="team-member">
+                    <img src="{{ url_for('static', filename='img/CM.jpg') }}" alt="Dr. Chandra J" class="member-image">
+                    <h3>Dr. Chandra J</h3>
+                    <p>Faculty Coordinator</p>
+                    <a href="https://www.linkedin.com/in/dr-chandra-j-98685334/" target="_blank" rel="noopener noreferrer">
+                        <img src="{{ url_for('static', filename='img/link.png') }}" alt="LinkedIn" class="linkedin-icon">
+                    </a>
+                </div>
+                <div class="team-member">
+                    <img src="{{ url_for('static', filename='img/TS.jpeg') }}" alt="Dr. Tejil J John" class="member-image">
+                    <h3>Dr. Tegil J John</h3>
+                    <p>Faculty Coordinator</p>
+                    <a href="https://www.linkedin.com/in/dr-tegil-j-john-1b7a34150/" target="_blank" rel="noopener noreferrer">
+                        <img src="{{ url_for('static', filename='img/link.png') }}" alt="LinkedIn" class="linkedin-icon">
+                    </a>
+                </div>
+            </div>
+
+            <!-- Core Team -->
+            <h3>Core Team</h3>
+            <div class="team-grid">
+                <div class="team-member">
+                    <img src="{{ url_for('static', filename='img/1.png') }}" alt="Himanshu Gulecha" class="member-image">
+                    <h3>Himanshu Gulecha</h3>
+                    <p>Core Team</p>
+                    <a href="https://www.linkedin.com/in/himanshugulechha?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app" target="_blank" rel="noopener noreferrer">
+                        <img src="{{ url_for('static', filename='img/link.png') }}" alt="LinkedIn" class="linkedin-icon">
+                    </a>
+                </div>
+                <div class="team-member">
+                    <img src="{{ url_for('static', filename='img/2.png') }}" alt="Priyansha Upadhyay" class="member-image">
+                    <h3>Priyansha Upadhyay</h3>
+                    <p>Core Team</p>
+                    <a href="https://www.linkedin.com/in/priyansha1306/" target="_blank" rel="noopener noreferrer">
+                        <img src="{{ url_for('static', filename='img/link.png') }}" alt="LinkedIn" class="linkedin-icon">
+                    </a>
+                </div>
+                <div class="team-member">
+                    <img src="{{ url_for('static', filename='img/3.png') }}" alt="Satyam Kumar" class="member-image">
+                    <h3>Satyam Kumar</h3>
+                    <p>Core Team</p>
+                    <a href="https://www.linkedin.com/in/satyamkumar09/" target="_blank" rel="noopener noreferrer">
+                        <img src="{{ url_for('static', filename='img/link.png') }}" alt="LinkedIn" class="linkedin-icon">
+                    </a>
+                </div>
+            </div>
+
+            <!-- Frontend Team -->
+            <h3>Frontend Team</h3>
+            <div class="team-grid">
+                <div class="team-member">
+                    <img src="{{ url_for('static', filename='img/4.png') }}" alt="Aleena Varghese" class="member-image">
+                    <h3>Aleena Varghese</h3>
+                    <p>Frontend Developer</p>
+                    <a href="http://www.linkedin.com/in/aleena-varghese-atv024" target="_blank" rel="noopener noreferrer">
+                        <img src="{{ url_for('static', filename='img/link.png') }}" alt="LinkedIn" class="linkedin-icon">
+                    </a>
+                </div>
+                <div class="team-member">
+                    <img src="{{ url_for('static', filename='img/5.png') }}" alt="Sanin Zulphi" class="member-image">
+                    <h3>Sanin Zulphi</h3>
+                    <p>Frontend Developer</p>
+                    <a href="https://www.linkedin.com/in/sanin-zulphi-590b58231/" target="_blank" rel="noopener noreferrer">
+                        <img src="{{ url_for('static', filename='img/link.png') }}" alt="LinkedIn" class="linkedin-icon">
+                    </a>
+                </div>
+                <div class="team-member">
+                    <img src="{{ url_for('static', filename='img/6.png') }}" alt="Sneha P" class="member-image">
+                    <h3>Sneha P</h3>
+                    <p>Frontend Developer</p>
+                    <a href="https://www.linkedin.com/in/sneha-p-5995sspp" target="_blank" rel="noopener noreferrer">
+                        <img src="{{ url_for('static', filename='img/link.png') }}" alt="LinkedIn" class="linkedin-icon">
+                    </a>
+                </div>
+            </div>
+
+            <!-- Backend Team -->
+            <h3>Backend Team</h3>
+            <div class="team-grid">
+                <div class="team-member">
+                    <img src="{{ url_for('static', filename='img/7.png') }}" alt="Badrinarayanan S" class="member-image">
+                    <h3>Badrinarayanan S</h3>
+                    <p>Backend Developer</p>
+                    <a href="https://www.linkedin.com/in/badrinarayanan-s-43629522a/" target="_blank" rel="noopener noreferrer">
+                        <img src="{{ url_for('static', filename='img/link.png') }}" alt="LinkedIn" class="linkedin-icon">
+                    </a>
+                </div>
+                <div class="team-member">
+                    <img src="{{ url_for('static', filename='img/53.png') }}" alt="Yeshwanth S" class="member-image">
+                    <h3>Yeshwanth S</h3>
+                    <p>Backend Developer</p>
+                    <a href="https://www.linkedin.com/in/kiran-basil/" target="_blank" rel="noopener noreferrer">
+                        <img src="{{ url_for('static', filename='img/link.png') }}" alt="LinkedIn" class="linkedin-icon">
+                    </a>
+                </div>
+                <div class="team-member">
+                    <img src="{{ url_for('static', filename='img/53.png') }}" alt="Jesvin K Justin" class="member-image">
+                    <h3>Jesvin K Justin</h3>
+                    <p>Backend Developer</p>
+                    <a href="https://www.linkedin.com/in/kiran-basil/" target="_blank" rel="noopener noreferrer">
+                        <img src="{{ url_for('static', filename='img/link.png') }}" alt="LinkedIn" class="linkedin-icon">
+                    </a>
+                </div>
+                <div class="team-member">
+                    <img src="{{ url_for('static', filename='img/54.png') }}" alt="Kezya Steffyn S" class="member-image">
+                    <h3>Kezya Steffyn S</h3>
+                    <p>Backend Developer</p>
+                    <a href="https://www.linkedin.com/in/kiran-basil/" target="_blank" rel="noopener noreferrer">
+                        <img src="{{ url_for('static', filename='img/link.png') }}" alt="LinkedIn" class="linkedin-icon">
+                    </a>
+                </div>
+                <div class="team-member">
+                    <img src="{{ url_for('static', filename='img/8.png') }}" alt="Kiran Basil Varghese" class="member-image">
+                    <h3>Kiran Basil Varghese</h3>
+                    <p>Backend Developer</p>
+                    <a href="https://www.linkedin.com/in/kiran-basil/" target="_blank" rel="noopener noreferrer">
+                        <img src="{{ url_for('static', filename='img/link.png') }}" alt="LinkedIn" class="linkedin-icon">
+                    </a>
+                </div>
+                <div class="team-member">
+                    <img src="{{ url_for('static', filename='img/9.png') }}" alt="Kripa Mary Jose" class="member-image">
+                    <h3>Kripa Mary Jose</h3>
+                    <p>Backend Developer</p>
+                    <a href="https://www.linkedin.com/in/kripa-mary-jose-b21555166/" target="_blank" rel="noopener noreferrer">
+                        <img src="{{ url_for('static', filename='img/link.png') }}" alt="LinkedIn" class="linkedin-icon">
+                    </a>
+                </div>
+            </div>
+
+            <!-- Preprocessing Team -->
+            <h3>Preprocessing Team</h3>
+            <div class="team-grid">
+                <div class="team-member">
+                    <img src="{{ url_for('static', filename='img/10.png') }}" alt="Bagyalakshmi S S" class="member-image">
+                    <h3>Bagyalakshmi S S</h3>
+                    <p>Preprocessing</p>
+                    <a href="https://www.linkedin.com/in/bagyalakshmi-s-shinde-048559246/" target="_blank" rel="noopener noreferrer">
+                        <img src="{{ url_for('static', filename='img/link.png') }}" alt="LinkedIn" class="linkedin-icon">
+                    </a>
+                </div>
+                <div class="team-member">
+                    <img src="{{ url_for('static', filename='img/11A.png') }}" alt="C Steffi Angel" class="member-image">
+                    <h3>C Steffi Angel</h3>
+                    <p>Preprocessing</p>
+                    <a href="https://www.linkedin.com/in/c-steffi-angel-8882a4244/" target="_blank" rel="noopener noreferrer">
+                        <img src="{{ url_for('static', filename='img/link.png') }}" alt="LinkedIn" class="linkedin-icon">
+                    </a>
+                </div>
+                <div class="team-member">
+                    <img src="{{ url_for('static', filename='img/11.png') }}" alt="Elizabeth George" class="member-image">
+                    <h3>Elizabeth George</h3>
+                    <p>Preprocessing</p>
+                    <a href="https://www.linkedin.com/in/elizabeth-george-62123322b/" target="_blank" rel="noopener noreferrer">
+                        <img src="{{ url_for('static', filename='img/link.png') }}" alt="LinkedIn" class="linkedin-icon">
+                    </a>
+                </div>
+                <div class="team-member">
+                    <img src="{{ url_for('static', filename='img/12.png') }}" alt="Manav Gupta" class="member-image">
+                    <h3>Manav Gupta</h3>
+                    <p>Preprocessing</p>
+                    <a href="https://www.linkedin.com/in/manav-gupta-83093a23b/" target="_blank" rel="noopener noreferrer">
+                        <img src="{{ url_for('static', filename='img/link.png') }}" alt="LinkedIn" class="linkedin-icon">
+                    </a>
+                </div>
+                <div class="team-member">
+                    <img src="{{ url_for('static', filename='img/40.png') }}" alt="Manashwy Padhi" class="member-image">
+                    <h3>Manashwy Padhi</h3>
+                    <p>Preprocessing</p>
+                    <a href="https://www.linkedin.com/in/manashwy-padhi-1664b576/" target="_blank" rel="noopener noreferrer">
+                        <img src="{{ url_for('static', filename='img/link.png') }}" alt="LinkedIn" class="linkedin-icon">
+                    </a>
+                </div>
+                <div class="team-member">
+                    <img src="{{ url_for('static', filename='img/13.png') }}" alt="Nanditha S" class="member-image">
+                    <h3>Nanditha S</h3>
+                    <p>Preprocessing</p>
+                    <a href="http://www.linkedin.com/in/nanditha-s-385359247" target="_blank" rel="noopener noreferrer">
+                        <img src="{{ url_for('static', filename='img/link.png') }}" alt="LinkedIn" class="linkedin-icon">
+                    </a>
+                </div>
+            </div>
+
+            <!-- Model Implementation Team -->
+            <h3>Model Implementation Team</h3>
+            <div class="team-grid">
+                <div class="team-member">
+                    <img src="{{ url_for('static', filename='img/14.png') }}" alt="Christina J Thattil" class="member-image">
+                    <h3>Christina J Thattil</h3>
+                    <p>Model Implementation</p>
+                    <a href="https://www.linkedin.com/in/christina-thattil-2b32a8284?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank" rel="noopener noreferrer">
+                        <img src="{{ url_for('static', filename='img/link.png') }}" alt="LinkedIn" class="linkedin-icon">
+                    </a>
+                </div>
+                <div class="team-member">
+                    <img src="{{ url_for('static', filename='img/15.png') }}" alt="Deyon Rose Babu T" class="member-image">
+                    <h3>Deyon Rose Babu T</h3>
+                    <p>Model Implementation</p>
+                    <a href="https://www.linkedin.com/in/deyon-rose-babu-thomas/" target="_blank" rel="noopener noreferrer">
+                        <img src="{{ url_for('static', filename='img/link.png') }}" alt="LinkedIn" class="linkedin-icon">
+                    </a>
+                </div>
+                <div class="team-member">
+                    <img src="{{ url_for('static', filename='img/16.png') }}" alt="Dhyan R" class="member-image">
+                    <h3>Dhyan R</h3>
+                    <p>Model Implementation</p>
+                    <a href="https://www.linkedin.com/in/dhyan-r/" target="_blank" rel="noopener noreferrer">
+                        <img src="{{ url_for('static', filename='img/link.png') }}" alt="LinkedIn" class="linkedin-icon">
+                    </a>
+                </div>
+                <div class="team-member">
+                    <img src="{{ url_for('static', filename='img/17.png') }}" alt="Epista R" class="member-image">
+                    <h3>Epista R</h3>
+                    <p>Model Implementation</p>
+                    <a href="https://www.linkedin.com/in/epsita-rajesh/" target="_blank" rel="noopener noreferrer">
+                        <img src="{{ url_for('static', filename='img/link.png') }}" alt="LinkedIn" class="linkedin-icon">
+                    </a>
+                </div>
+                <div class="team-member">
+                    <img src="{{ url_for('static', filename='img/18.png') }}" alt="Ismail Basheer" class="member-image">
+                    <h3>Ismail Basheer</h3>
+                    <p>Model Implementation</p>
+                    <a href="https://www.linkedin.com/in/ismail-basheer/" target="_blank" rel="noopener noreferrer">
+                        <img src="{{ url_for('static', filename='img/link.png') }}" alt="LinkedIn" class="linkedin-icon">
+                    </a>
+                </div>
+                <div class="team-member">
+                    <img src="{{ url_for('static', filename='img/19.png') }}" alt="Karthikeyan K J" class="member-image">
+                    <h3>Karthikeyan K J</h3>
+                    <p>Model Implementation</p>
+                    <a href="https://www.linkedin.com/in/karthikeyan-kj/" target="_blank" rel="noopener noreferrer">
+                        <img src="{{ url_for('static', filename='img/link.png') }}" alt="LinkedIn" class="linkedin-icon">
+                    </a>
+                </div>
+                <div class="team-member">
+                    <img src="{{ url_for('static', filename='img/20.png') }}" alt="M Surendran" class="member-image">
+                    <h3>M Surendran</h3>
+                    <p>Model Implementation</p>
+                    <a href="https://www.linkedin.com/in/surendran-m-71a7501a9/" target="_blank" rel="noopener noreferrer">
+                        <img src="{{ url_for('static', filename='img/link.png') }}" alt="LinkedIn" class="linkedin-icon">
+                    </a>
+                </div>
+                <div class="team-member">
+                    <img src="{{ url_for('static', filename='img/22.png') }}" alt="Manu Martin" class="member-image">
+                    <h3>Manu Martin</h3>
+                    <p>Model Implementation</p>
+                    <a href="https://www.linkedin.com/in/manu-martin-7556971ba/" target="_blank" rel="noopener noreferrer">
+                        <img src="{{ url_for('static', filename='img/link.png') }}" alt="LinkedIn" class="linkedin-icon">
+                    </a>
+                </div>
+                <div class="team-member">
+                    <img src="{{ url_for('static', filename='img/23.png') }}" alt="Marcus Daniel P" class="member-image">
+                    <h3>Marcus Daniel P</h3>
+                    <p>Model Implementation</p>
+                    <a href="https://www.linkedin.com/in/marcus-daniel-p-b35b00284/" target="_blank" rel="noopener noreferrer">
+                        <img src="{{ url_for('static', filename='img/link.png') }}" alt="LinkedIn" class="linkedin-icon">
+                    </a>
+                </div>
+                <div class="team-member">
+                    <img src="{{ url_for('static', filename='img/24.png') }}" alt="Melvin Infant A" class="member-image">
+                    <h3>Melvin Infant A</h3>
+                    <p>Model Implementation</p>
+                    <a href="https://www.linkedin.com/in/melvininfant/" target="_blank" rel="noopener noreferrer">
+                        <img src="{{ url_for('static', filename='img/link.png') }}" alt="LinkedIn" class="linkedin-icon">
+                    </a>
+                </div>
+                <div class="team-member">
+                    <img src="{{ url_for('static', filename='img/25.png') }}" alt="Muzzammil Razin PA" class="member-image">
+                    <h3>Muzzammil Razin PA</h3>
+                    <p>Model Implementation</p>
+                    <a href="https://www.linkedin.com/in/muzzammil-razin/" target="_blank" rel="noopener noreferrer">
+                        <img src="{{ url_for('static', filename='img/link.png') }}" alt="LinkedIn" class="linkedin-icon">
+                    </a>
+                </div>
+                <div class="team-member">
+                    <img src="{{ url_for('static', filename='img/27.png') }}" alt="Ponwinsiya P" class="member-image">
+                    <h3>Ponwinsiya P</h3>
+                    <p>Model Implementation</p>
+                    <a href="https://www.linkedin.com/in/ponwinsiya-ponpandi-585a611ba/" target="_blank" rel="noopener noreferrer">
+                        <img src="{{ url_for('static', filename='img/link.png') }}" alt="LinkedIn" class="linkedin-icon">
+                    </a>
+                </div>
+                <div class="team-member">
+                    <img src="{{ url_for('static', filename='img/28.png') }}" alt="Pradakshina P" class="member-image">
+                    <h3>Pradakshina P</h3>
+                    <p>Model Implementation</p>
+                    <a href="https://www.linkedin.com/in/pradakshina-premkumar-609043248/" target="_blank" rel="noopener noreferrer">
+                        <img src="{{ url_for('static', filename='img/link.png') }}" alt="LinkedIn" class="linkedin-icon">
+                    </a>
+                </div>
+                <div class="team-member">
+                    <img src="{{ url_for('static', filename='img/29.png') }}" alt="Rahul Krishna K R" class="member-image">
+                    <h3>Rahul Krishna K R</h3>
+                    <p>Model Implementation</p>
+                    <a href="https://www.linkedin.com/in/rahul-krishna-kr/" target="_blank" rel="noopener noreferrer">
+                        <img src="{{ url_for('static', filename='img/link.png') }}" alt="LinkedIn" class="linkedin-icon">
+                    </a>
+                </div>
+                <div class="team-member">
+                    <img src="{{ url_for('static', filename='img/30.png') }}" alt="Ranjan Shruti I" class="member-image">
+                    <h3>Ranjan Shruti I</h3>
+                    <p>Model Implementation</p>
+                    <a href="https://www.linkedin.com/in/shruti-ranjan20/" target="_blank" rel="noopener noreferrer">
+                        <img src="{{ url_for('static', filename='img/link.png') }}" alt="LinkedIn" class="linkedin-icon">
+                    </a>
+                </div>
+                <div class="team-member">
+                    <img src="{{ url_for('static', filename='img/31.png') }}" alt="Ridhin Issac A" class="member-image">
+                    <h3>Ridhin Issac A</h3>
+                    <p>Model Implementation</p>
+                    <a href="http://www.linkedin.com/in/ridhinissacabraham" target="_blank" rel="noopener noreferrer">
+                        <img src="{{ url_for('static', filename='img/link.png') }}" alt="LinkedIn" class="linkedin-icon">
+                    </a>
+                </div>
+                <div class="team-member">
+                    <img src="{{ url_for('static', filename='img/32.png') }}" alt="Ritushree Dey" class="member-image">
+                    <h3>Ritushree Dey</h3>
+                    <p>Model Implementation</p>
+                    <a href="https://www.linkedin.com/in/ritushree-dey/" target="_blank" rel="noopener noreferrer">
+                        <img src="{{ url_for('static', filename='img/link.png') }}" alt="LinkedIn" class="linkedin-icon">
+                    </a>
+                </div>
+                <div class="team-member">
+                    <img src="{{ url_for('static', filename='img/33.png') }}" alt="Samson Sabu" class="member-image">
+                    <h3>Samson Sabu</h3>
+                    <p>Model Implementation</p>
+                    <a href="https://www.linkedin.com/in/samson-sabu-8aab0a22b/" target="_blank" rel="noopener noreferrer">
+                        <img src="{{ url_for('static', filename='img/link.png') }}" alt="LinkedIn" class="linkedin-icon">
+                    </a>
+                </div>
+                <div class="team-member">
+                    <img src="{{ url_for('static', filename='img/34.png') }}" alt="Sanjay S" class="member-image">
+                    <h3>Sanjay S</h3>
+                    <p>Model Implementation</p>
+                    <a href="http://www.linkedin.com/in/SanjaySathiyasankar" target="_blank" rel="noopener noreferrer">
+                        <img src="{{ url_for('static', filename='img/link.png') }}" alt="LinkedIn" class="linkedin-icon">
+                    </a>
+                </div>
+                <div class="team-member">
+                    <img src="{{ url_for('static', filename='img/35.png') }}" alt="Swapnali Singh" class="member-image">
+                    <h3>Swapnali Singh</h3>
+                    <p>Model Implementation</p>
+                    <a href="https://www.linkedin.com/in/swapnali-singh-3969a9247/" target="_blank" rel="noopener noreferrer">
+                        <img src="{{ url_for('static', filename='img/link.png') }}" alt="LinkedIn" class="linkedin-icon">
+                    </a>
+                </div>
+                <div class="team-member">
+                    <img src="{{ url_for('static', filename='img/36.png') }}" alt="Swetha R" class="member-image">
+                    <h3>Swetha R</h3>
+                    <p>Model Implementation</p>
+                    <a href="https://www.linkedin.com/in/swethar68/" target="_blank" rel="noopener noreferrer">
+                        <img src="{{ url_for('static', filename='img/link.png') }}" alt="LinkedIn" class="linkedin-icon">
+                    </a>
+                </div>
+                <div class="team-member">
+                    <img src=".{{ url_for('static', filename='img/37.png') }}" alt="Victor Jose I J" class="member-image">
+                    <h3>Victor Jose I J</h3>
+                    <p>Model Implementation</p>
+                    <a href="https://www.linkedin.com/in/victor-jose-i-j-210903284" target="_blank" rel="noopener noreferrer">
+                        <img src="{{ url_for('static', filename='img/link.png') }}" alt="LinkedIn" class="linkedin-icon">
+                    </a>
+                </div>
+                <div class="team-member">
+                    <img src="{{ url_for('static', filename='img/38.png') }}" alt="Reeve R Mathew" class="member-image">
+                    <h3>Reeve R Mathew</h3>
+                    <p>Model Implementation</p>
+                    <a href="https://www.linkedin.com/in/reeve-r-mathew-744b11284?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank" rel="noopener noreferrer">
+                        <img src="{{ url_for('static', filename='img/link.png') }}" alt="LinkedIn" class="linkedin-icon">
+                    </a>
+                </div>
+            </div>
+
+            <!-- Research Team -->
+            <h3>Research Team</h3>
+            <div class="team-grid">
+                <div class="team-member">
+                    <img src="{{ url_for('static', filename='img/39.png') }}" alt="Akshithaa Parvathavardhini" class="member-image">
+                    <h3>Akshithaa Parvathavardhini</h3>
+                    <p>Research Team</p>
+                    <a href="https://www.linkedin.com/in/akshithaa-parasuram/" target="_blank" rel="noopener noreferrer">
+                        <img src="{{ url_for('static', filename='img/link.png') }}" alt="LinkedIn" class="linkedin-icon">
+                    </a>
+                </div>
+                <div class="team-member">
+                    <img src="{{ url_for('static', filename='img/26.png') }}" alt="Neha Seirah Biju" class="member-image">
+                    <h3>Neha Seirah Biju</h3>
+                    <p>Research Team</p>
+                    <a href="https://www.linkedin.com/in/neha-seirah-biju-940130216/" target="_blank" rel="noopener noreferrer">
+                        <img src="{{ url_for('static', filename='img/link.png') }}" alt="LinkedIn" class="linkedin-icon">
+                    </a>
+                </div>
+                <div class="team-member">
+                    <img src="{{ url_for('static', filename='img/41.png') }}" alt="Vikash Krishna R" class="member-image">
+                    <h3>Vikash Krishna R</h3>
+                    <p>Research Team</p>
+                    <a href="https://www.linkedin.com/in/vikash-krishna-r-0a01b2285/" target="_blank" rel="noopener noreferrer">
+                        <img src="{{ url_for('static', filename='img/link.png') }}" alt="LinkedIn" class="linkedin-icon">
+                    </a>
+                </div>
+                <div class="team-member">
+                    <img src="{{ url_for('static', filename='img/42.png') }}" alt="Vivegavane D" class="member-image">
+                    <h3>Vivegavane D</h3>
+                    <p>Research Team</p>
+                    <a href="https://www.linkedin.com/in/vivegavane/" target="_blank" rel="noopener noreferrer">
+                        <img src="{{ url_for('static', filename='img/link.png') }}" alt="LinkedIn" class="linkedin-icon">
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer (Assuming it's a separate component) -->
+        <footer>
+            <!-- Replace with your actual Footer HTML -->
+            <div class="footer">
+                <!-- Footer content goes here -->
+            </div>
+        </footer>
+    </div>
+</body>
+</html>
