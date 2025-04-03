@@ -18,7 +18,7 @@
         .about-header {
             background-color: #ffffff; /* Dark blue background */
             color: #063979;
-            padding: 20px 0;
+            padding: 80px 0;
             text-align: center;
         }
 
@@ -140,17 +140,19 @@
         .linkedin-icon:hover {
             opacity: 0.7;
         }
+
+        {% include "/includes/navbarCSS.html" %}
+        {% include "/includes/footerCSS.html" %}
+
     </style>
 </head>
 <body>
+
+        <!-- Navbar -->
+        {% include "/includes/navbar.html" %}
+        <!-- Navbar ends -->
+
     <div class="about-page">
-        <!-- Navbar (Assuming it's a separate component) -->
-        <header>
-            <!-- Replace with your actual Navbar HTML -->
-            <nav class="navbar">
-                <!-- Navbar content goes here -->
-            </nav>
-        </header>
 
         <!-- Header Section -->
         <section class="about-header">
@@ -610,13 +612,10 @@
             </div>
         </section>
 
-        <!-- Footer (Assuming it's a separate component) -->
-        <footer>
-            <!-- Replace with your actual Footer HTML -->
-            <div class="footer">
-                <!-- Footer content goes here -->
-            </div>
-        </footer>
+            <!-- Footer -->
+                {% include "/includes/footer.html" %}
+            <!--Footer ends-->
+
     </div>
 </body>
 </html>
