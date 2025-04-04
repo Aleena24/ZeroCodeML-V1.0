@@ -268,12 +268,19 @@
         }
 
         function selectModel(element, modelDisplay, modelValue) {
-            document.querySelectorAll(".algo-flip-card").forEach(btn => btn.classList.remove("selected"));
-            element.classList.add("selected");
+                // Remove 'selected' class from all model cards
+                document.querySelectorAll(".algo-flip-card").forEach(btn => btn.classList.remove("selected"));
 
-            // Set values in hidden input fields
-            document.getElementById("selected-model").value = modelValue;
-        }
+                // Add 'selected' class to the clicked model's card
+                const card = element.closest('.algo-flip-card');
+                if (card) {
+                    card.classList.add("selected");
+                }
+
+                // Set values in hidden input fields
+                document.getElementById("selected-model").value = modelValue;
+            }
+
 
         function backToCategories() {
             document.getElementById("categories").style.display = "flex";
