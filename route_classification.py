@@ -20,6 +20,7 @@ from sklearn.metrics import confusion_matrix, classification_report, roc_curve, 
 from classification import *
 from classify_visualize import *
 from Preprocessing import *
+from genAI import *
 
 classification = Blueprint('classification', __name__, url_prefix='/classification')
 
@@ -89,7 +90,10 @@ def classify(learningType, algorithm, model_name, target_column):
         precision, recall, _ = precision_recall_curve(y_test, y_probs[:, i], pos_label=i)
         prCurve.append({"name": f"Class {i}","precision":list(precision),"recall":list(recall)})
 
-
+    '''
+    GenAI response
+    '''
+    genAI_response = getDesciption(model_name, metrics)
     # confusion_matrix = plot_confusion_matrix(y_test, y_pred)
     # roc_curve = plot_roc_curve(model,X_test,y_test)
     # precision_recall_curve = plot_precision_recall_curve(model,X_test,y_test)
@@ -102,7 +106,8 @@ def classify(learningType, algorithm, model_name, target_column):
                            cmHighValue = cmHighValue,
                            cmLowValue = cmLowValue,
                            rocPlot = rocPlot,
-                           prCurve = prCurve)
+                           prCurve = prCurve,
+                           genAI_response = genAI_response)
 
 
 

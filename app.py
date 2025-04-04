@@ -25,8 +25,14 @@ app.register_blueprint(clustering)
 def home():
      return render_template("home.html")
 
-@app.route("/upload", methods = ['POST', 'GET'])
+
+@app.route("/Upload", methods = ['POST', 'GET'])
 def upload():
+    return render_template("main.html")
+
+
+@app.route("/Model-selection", methods = ['POST', 'GET'])
+def modelSelection():
 
     if request.method == 'POST':
         #  def load_dataset():        
@@ -43,7 +49,9 @@ def upload():
         return render_template("algo.html", df_column = df_column)
 
     else:
-          return render_template("main.html")
+          df = pd.read_csv("data.csv")
+          df_column = df.columns
+          return render_template("algo.html", df_column = df_column)
     
 
 @app.route("/About-Us", methods = ['POST', 'GET'])
@@ -60,11 +68,9 @@ def ts():
 def articles():
     return render_template("articles.html")
 
-
 @app.route("/Contact", methods = ['POST', 'GET'])
 def contact():
     return render_template("contact.html")
-
 
 if __name__ == "__main__":                       
         app.run(host='0.0.0.0',

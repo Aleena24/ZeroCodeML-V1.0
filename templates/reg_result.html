@@ -327,8 +327,34 @@
         </div>
         <!--Row ends-->
         
+    <!--AI response starts-->
+    <div class="accordion mt-3 " id="accordionExample">
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="headingOne">
+            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+              AI Analysis
+            </button>
+          </h2>
+          <div id="collapseOne" class="accordion-collapse collapse " aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+            <div class="accordion-body text-start">
+                {{genAI_response | safe}}
+            </div>
+          </div>
+        </div>
     </div>
-    <!--Container ends-->
+    <!--AI response ends-->
+    
+    <!--Buttons starts-->
+    <div class="d-grid gap-2 mt-5 mb-3 d-md-block">
+        <a href="{{url_for('upload')}}"><button class="btn btn-primary" type="button">Upload</button></a>
+        <a href="{{url_for('modelSelection')}}"><button class="btn btn-primary" type="button">Swap</button></a>
+        <!-- <button class="btn btn-primary" type="button"  onclick="print()">Download</button> -->
+    </div>
+    <!--Buttons ends-->
+
+</div>
+<!--Container ends-->
+
 
         <!-- Footer -->
         {% include "/includes/footer.html" %}
@@ -343,10 +369,6 @@
                 .then(data => document.getElementById(containerId).innerHTML = data)
                 .catch(error => console.error("Error loading " + filePath, error));
         }
-
-        // Load Navbar and Footer
-        loadHTML("navbar-container", "/static/navbar.html");
-        loadHTML("footer-container", "/static/footer.html");
     </script>
 </body>
 </html>

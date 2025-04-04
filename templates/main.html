@@ -113,14 +113,13 @@
         <h1>ZeroCodeML Workflow</h1>
         <p>Upload Your File to Get Started</p>
 
-        <form id="uploadForm" action="{{ url_for('upload') }}" method="POST" enctype="multipart/form-data">
-
+        <form id="uploadForm" action="{{ url_for('modelSelection') }}" method="POST" enctype="multipart/form-data">
             <div class="zerocodeml-upload-container">
                 <!-- Custom File Upload -->
                 <label for="fileInput" class="zerocodeml-file-label">
                     <i class="fa-solid fa-upload"></i> Choose a File
                 </label>
-                <input type="file" id="fileInput" name="csvFile" class="zerocodeml-file-input" accept=".csv, .xlsx, .xls" onchange="displayFileName()"> 
+                <input type="file" id="fileInput" name="csvFile" class="zerocodeml-file-input" accept=".csv, .xlsx, .xls" onchange="displayFileName()">
                 
                 <!-- Display Selected File Name -->
                 <p id="fileNameDisplay" class="zerocodeml-file-name"></p>

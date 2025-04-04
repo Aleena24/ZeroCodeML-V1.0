@@ -29,6 +29,7 @@ from sklearn.metrics import r2_score, mean_squared_error, mean_absolute_error, m
 from regression import *
 from regression_visualize import *
 from Preprocessing import *
+from genAI import *
 
 
 regression = Blueprint('regression', __name__,  url_prefix='/regression')
@@ -70,6 +71,14 @@ def regress(learningType, algorithm, model_name, target_column):
     for i in range(len(counts)):
         freq.append(int(counts[i]))
         bin.append(float(bin_edges[i]))
+
+
+
+    '''
+    GenAI response
+    '''
+    genAI_response = getDesciption(model_name, metrics)
+    # print(genAI_response)
     # histogram_data = [{"value": int(counts[i]), "bin": float(bin_edges[i])} for i in range(len(counts))]
     # print(histogram_data)
 
@@ -80,7 +89,7 @@ def regress(learningType, algorithm, model_name, target_column):
     # actual_vs_pred = plot_actual_vs_predicted(y_test, y_pred, model_name)
     # residual = plot_residuals(y_test, y_pred, model_name)
     # feature_importance = plot_feature_importance(model, X_train)
-    print(metrics)
+    # print(model_name,metrics)
     return render_template("reg_result.html",
                            metrics = metrics,
                            y_test = y_test,
@@ -92,7 +101,8 @@ def regress(learningType, algorithm, model_name, target_column):
                            freq = freq,
                            bin = bin,
                            min_residual = float(bin_edges[0]),
-                           max_residual = float(bin_edges[-1])
+                           max_residual = float(bin_edges[-1]),
+                           genAI_response = genAI_response
                            )
                            
 
