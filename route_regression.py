@@ -22,7 +22,7 @@ from sklearn.ensemble import (
 import xgboost as xgb
 import lightgbm as lgb
 import catboost as cb
-from sklearn.metrics import r2_score, mean_squared_error, mean_absolute_error, mean_absolute_percentage_error,root_mean_squared_error
+from sklearn.metrics import r2_score, mean_squared_error, mean_absolute_error, mean_absolute_percentage_error
 
 
 #custom import

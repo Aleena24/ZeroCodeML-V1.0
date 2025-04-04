@@ -16,7 +16,7 @@ from sklearn.ensemble import (
 import xgboost as xgb
 import lightgbm as lgb
 import catboost as cb
-from sklearn.metrics import r2_score, mean_squared_error, mean_absolute_error, mean_absolute_percentage_error,root_mean_squared_error
+from sklearn.metrics import r2_score, mean_squared_error, mean_absolute_error, mean_absolute_percentage_error
 
 # Dictionary of all regression models
 regression_models = {
@@ -48,7 +48,7 @@ def train_regression_model(model_name, X_train, X_test, y_train, y_test):
     metrics = {
         "R2": r2_score(y_test, y_pred),
         "MSE": mean_squared_error(y_test, y_pred),
-        "RMSE": root_mean_squared_error(y_test, y_pred),
+        "RMSE": np.sqrt(mean_squared_error(y_test, y_pred)),
         "MAE": mean_absolute_error(y_test, y_pred),
         "MAPE": mean_absolute_percentage_error(y_test, y_pred)
     }
