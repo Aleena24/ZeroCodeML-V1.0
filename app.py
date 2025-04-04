@@ -61,6 +61,11 @@ def articles():
     return render_template("articles.html")
 
 
+@app.route("/Contact", methods = ['POST', 'GET'])
+def contact():
+    return render_template("contact.html")
+
+
 if __name__ == "__main__":                       
         app.run(host='0.0.0.0',
                 port=8000,
