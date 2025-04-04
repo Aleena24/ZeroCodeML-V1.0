@@ -32,7 +32,8 @@
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 20px;
+            padding: 10px;
+            margin-top: auto;
         }
 
         /* ===== Header Styles ===== */
@@ -48,7 +49,8 @@
 
         .article-header h1 {
             font-size: 2.8rem;
-            margin-bottom: 15px;
+            margin-bottom: 80px;
+            margin-top: 80px;
         }
 
         .article-header p {
@@ -209,9 +211,18 @@
                 width: 100%;
             }
         }
+
+        {% include "/includes/navbarCSS.html" %}
+        {% include "/includes/footerCSS.html" %}
+
     </style>
 </head>
 <body>
+
+    <!-- Navbar -->
+    {% include "/includes/navbar.html" %}
+    <!-- Navbar ends -->
+
     <!-- Article Header -->
     <header class="article-header">
         <div class="container">
@@ -357,6 +368,10 @@
             </div>
         </div>
     </main>
+
+        <!-- Footer -->
+        {% include "/includes/footer.html" %}
+        <!--Footer ends-->
 
     <script>
         // Handle category box clicks

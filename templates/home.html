@@ -91,12 +91,15 @@
         }
         {% include "/includes/navbarCSS.html" %}
         {% include "/includes/footerCSS.html" %}
+
     </style>
 </head>
 <body>
+
     <!-- Navbar -->
     {% include "/includes/navbar.html" %}
     <!-- Navbar ends -->
+
     <div class="main">
     <div class="hero-section">
         <img src="{{ url_for('static', filename='img/logo.png') }}" alt="ZeroCodeML Logo" class="logo">
@@ -147,9 +150,5 @@
     {% include "/includes/footer.html" %}
     <!--Footer ends-->
     
-    <!-- <script>
-        document.getElementById("navbar-container").innerHTML = '<object type="text/html" data="navbar.html" width="100%" height="80px"></object>';
-        document.getElementById("footer-container").innerHTML = '<object type="text/html" data="footer.html" width="100%" height="100px"></object>';
-    </script> -->
 </body>
 </html>
