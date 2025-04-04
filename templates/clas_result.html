@@ -20,7 +20,7 @@
             background-size: cover;
             background-repeat: no-repeat;
             background-attachment: fixed;
-            padding: 10px;
+            padding: 100px;
             color: #062aab;
             min-height: 100vh;
             display: flex;
@@ -79,9 +79,19 @@
             align-items: center;
             cursor: pointer;
         }
-    </style>
+        {% include "/includes/navbarCSS.html" %}
+        {% include "/includes/footerCSS.html" %}
+ 
+
+</style>
 </head>
 <body>
+
+        <!-- Navbar -->
+        {% include "/includes/navbar.html" %}
+        <!-- Navbar ends -->
+
+
     <!--Container start-->
     <div class="container mt-5">
         <!--Row starts-->
@@ -93,7 +103,7 @@
                     <div class="card-body">
                         <div>
                             <h5 class="text-muted header-title mt-0">Accuracy</h5>
-                            <h4 class="mt-1 mb-0">{{metrics['accuracy']}}</h4>
+                            <h4 class="mt-1 mb-0">{{ (metrics['accuracy'] * 100) | round(2) }}%</h4>
                         </div>
                     </div>
                 </div>
@@ -105,7 +115,7 @@
                     <div class="card-body">
                         <div>
                             <h5 class="text-muted header-title mt-0">Precision</h5>
-                            <h4 class="mt-1 mb-0">{{metrics['precision']}}</h4>
+                            <h4 class="mt-1 mb-0">{{ (metrics['precision'] * 100) | round(2) }}%</h4>
                         </div>
                     </div>
                 </div>
@@ -117,7 +127,7 @@
                     <div class="card-body">
                         <div>
                             <h5 class="text-muted header-title mt-0">Recall</h5>
-                            <h4 class="mt-1 mb-0">{{metrics['recall']}}</h4>
+                            <h4 class="mt-1 mb-0">{{ (metrics['recall']*100) | round(2) }}%</h4>
                         </div>
                     </div>
                 </div>
@@ -129,7 +139,7 @@
                     <div class="card-body">
                         <div>
                             <h5 class="text-muted header-title mt-0">F1 score</h5>
-                            <h4 class="mt-1 mb-0">{{metrics['f1_score']}}</h4>
+                            <h4 class="mt-1 mb-0">{{ (metrics['f1_score']*100) | round(2) }}%</h4>
                         </div>
                     </div>
                 </div>
@@ -244,6 +254,12 @@
                     <div class="card-body">
                         <h5 class="text-muted header-title mt-0">ROC CURVE <h5>
                         <div id="rocAucCurve" style="height: 450px; width: 100%;"></div>
+
+        <!-- Footer -->
+        {% include "/includes/navbar.html" %}
+        <!-- Footer ends -->
+
+
                         <script>
                             // Initialize the chart
                             var chart = echarts.init(document.getElementById('rocAucCurve'));

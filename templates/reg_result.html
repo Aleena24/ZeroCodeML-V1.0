@@ -19,7 +19,7 @@
             background-size: cover;
             background-repeat: no-repeat;
             background-attachment: fixed;
-            padding: 10px;
+            padding: 100px;
             color: #062aab;
             min-height: 100vh;
             display: flex;
@@ -103,7 +103,7 @@
                     <div class="card-body">
                         <div>
                             <h5 class="text-muted header-title mt-0">R2 score</h5>
-                            <h4 class="mt-1 mb-0">{{metrics['R2']}}</h4>
+                            <h4 class="mt-1 mb-0">{{ (metrics['R2'] * 100) | round(2) }}%</h4>
                         </div>
                     </div>
                 </div>
@@ -115,7 +115,7 @@
                     <div class="card-body">
                         <div>
                             <h5 class="text-muted header-title mt-0">MSE</h5>
-                            <h4 class="mt-1 mb-0">{{metrics['MSE']}}</h4>
+                            <h4 class="mt-1 mb-0">{{ (metrics['MSE']* 100) | round(2) }}%</h4>
                         </div>
                     </div>
                 </div>
@@ -127,7 +127,7 @@
                     <div class="card-body">
                         <div>
                             <h5 class="text-muted header-title mt-0">RMSE</h5>
-                            <h4 class="mt-1 mb-0">{{metrics['RMSE']}}</h4>
+                            <h4 class="mt-1 mb-0">{{ (metrics['RMSE'] * 100) | round(2) }}%</h4>
                         </div>
                     </div>
                 </div>
@@ -139,7 +139,7 @@
                     <div class="card-body">
                         <div>
                             <h5 class="text-muted header-title mt-0">MAE</h5>
-                            <h4 class="mt-1 mb-0">{{metrics['MAE']}}</h4>
+                            <h4 class="mt-1 mb-0">{{ (metrics['MAE'] * 100) | round(2) }}%</h4>
                         </div>
                     </div>
                 </div>

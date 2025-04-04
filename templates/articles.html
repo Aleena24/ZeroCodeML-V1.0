@@ -26,6 +26,8 @@
             line-height: 1.6;
             color: #333;
             background-color: #f8f9fa;
+            background: url("{{ url_for('static', filename='img/bg2.png') }}") no-repeat center center fixed;
+            background-size: cover;
             padding: 20px;
         }
 
@@ -241,7 +243,7 @@
                 </div>
                 <div class="category-content">
                     <div class="category-description">
-                        <img src="{{ url_for('static', filename='img/reg.png') }} alt="Regression Visualization">
+                        <img src="{{ url_for('static', filename='img/reg.png') }}" alt="Regression Visualization">
                         <p>
                             Regression algorithms predict continuous output values based on input features. They model the relationship 
                             between a dependent (target) variable and one or more independent variables. Regression is widely used 
@@ -303,7 +305,7 @@
                 </div>
                 <div class="category-content">
                     <div class="category-description">
-                        <img src="{{ url_for('static', filename='img/class.png') }} alt="Classification Visualization">
+                        <img src="{{ url_for('static', filename='img/class.png') }}" alt="Classification Visualization">
                         <p>
                             Classification algorithms predict discrete class labels. They learn decision boundaries to separate different 
                             classes in the feature space. Used for spam detection, image recognition, medical diagnosis, etc. 
