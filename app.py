@@ -34,7 +34,7 @@ def upload():
             return "No file part found. Ensure the input name is 'csvFile'.", 400
         
         file = request.files['csvFile']
-        file_path = os.getcwd()+os.path.altsep+"data.csv"
+        file_path = os.path.join(os.getcwd(), "data.csv")
         file.save(file_path)
 
         if file:
