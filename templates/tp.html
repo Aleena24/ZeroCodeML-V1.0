@@ -8,13 +8,15 @@
 
     <style>
         /* ===== Global Styles ===== */
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
+            body {
+            font-family: "Arial", sans-serif;
             color: #333;
             margin: 0;
             padding: 0;
-            background-color: #f8f9fa;
+            background: url("{{ url_for('static', filename='img/bg2.png') }}") no-repeat center center fixed;
+            background-size: cover;
+            text-align: left;
+
         }
 
         .container {

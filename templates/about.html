@@ -8,14 +8,16 @@
 
     <style>
         /* General Page Styles */
-        .about-page {
-            font-family: 'Arial', sans-serif;
-            line-height: 1.6;
+        
+        body {
+            font-family: "Arial", sans-serif;
             color: #333;
-            padding: 0;
             margin: 0;
+            padding: 0;
+            background: url("{{ url_for('static', filename='img/bg2.png') }}") no-repeat center center fixed;
+            background-size: cover;
+            text-align: center;
         }
-
         /* Header Section */
         .about-header {
             background-color: #ffffff; /* Dark blue background */

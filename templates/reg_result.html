@@ -16,20 +16,15 @@
 
     <style>
         body {
-            text-align: center;
-            background-image: url("{{ url_for('static', filename='img/bg1.png') }}");
-            background-size: cover;
-            background-repeat: no-repeat;
-            background-attachment: fixed;
-            padding: 100px;
-            color: #062aab;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
-            align-items: center;
+            font-family: "Arial", sans-serif;
+            color: #333;
             margin: 0;
+            padding: 0;
+            background: url("{{ url_for('static', filename='img/bg1.png') }}") no-repeat center center fixed;
+            background-size: cover;
+            text-align: center;
         }
+
         .headline { font-size: 5rem; margin: 50px; }
         .subheadline { font-size: 1.2rem; margin: 50px; }
         .results-container {
