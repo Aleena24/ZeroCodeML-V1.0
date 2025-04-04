@@ -70,7 +70,7 @@
             color: black;
             transform: rotateY(180deg);
             font-size: 1rem;
-            padding: 10px;
+            padding: 20px;
             text-align: center;
         }
         .selected {
@@ -208,15 +208,29 @@
                 Regression: ["Linear Regression", "Elastic Net", "Ridge Regression", "Lasso Regression"],
                 Classification: ["Logistic Regression", "SVM", "Decision Tree", "Random Forest", "Gradient Boosting"]
             };
+            const modelDescriptions = {
+                "Linear Regression": "Fits a straight line to predict continuous values. Best used when there's a linear relationship between features and target.",
+                "Elastic Net": "Combines L1 and L2 regularization to improve performance and feature selection. Ideal for data with multicollinearity.",
+                "Ridge Regression": "Adds L2 penalty to reduce overfitting. Works well when all features contribute to the output.",
+                "Lasso Regression": "Adds L1 penalty to shrink some coefficients to zero, effectively performing feature selection.",
+                "Logistic Regression": "Used for binary classification. Estimates the probability of a class using a sigmoid function.",
+                "SVM": "Finds the optimal hyperplane that separates classes with maximum margin. Effective in high-dimensional spaces.",
+                "Decision Tree": "Splits data using feature thresholds. Easy to interpret and suitable for both classification and regression.",
+                "Random Forest": "Ensemble of decision trees that reduces overfitting and improves accuracy by averaging multiple trees.",
+                "Gradient Boosting": "Builds trees sequentially to correct previous errors. Delivers high accuracy but is more computationally intensive."
+            };
+
             models[category].forEach(model => {
                 let button = document.createElement("div");
                 button.className = "algo-flip-card";
-                button.innerHTML = `<div class='algo-flip-card-inner' onclick='selectModel(this, "${model}", "${modelMapping[model]}")'>
-                    <div class='algo-flip-card-front'>${model}</div>
-                    <div class='algo-flip-card-back'>Description of ${model}</div>
-                </div>`;
+                button.innerHTML = `
+                    <div class='algo-flip-card-inner' onclick='selectModel(this, "${model}", "${modelMapping[model]}")'>
+                        <div class='algo-flip-card-front'>${model}</div>
+                        <div class='algo-flip-card-back'>${modelDescriptions[model] || 'Description not available.'}</div>
+                    </div>`;
                 modelButtons.appendChild(button);
             });
+
         }
 
         function selectModel(element, modelDisplay, modelValue) {
