@@ -18,7 +18,10 @@
         
         <!-- Right Side: Get Started Button -->
         <div class="navbar-button-container">
-            <a href="{{url_for('about')}}" class="get-started-button">About Us</a>
+            <a href="{{url_for('about')}}" class="image-button" title="About Us">
+                <img src="{{ url_for('static', filename='img/abt.png') }}" alt="About Us" class="about-img-btn">
+            </a>
+            
         </div>
         
     </div>
