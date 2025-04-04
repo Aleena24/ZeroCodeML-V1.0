@@ -20,3 +20,8 @@ requests==2.31.0
 
 openpyxl==3.1.2
 gunicorn==21.2.0
+
+google-generativeai
+openai
+langchain
+langchain-core
