@@ -1,11 +1,11 @@
+import os
+import re
 from langchain_core.prompts import ChatPromptTemplate 
 from langchain_core.output_parsers import StrOutputParser 
 from langchain_groq import ChatGroq
-import os
-from dotenv import load_dotenv 
-import re
 
-load_dotenv()
+# ✅ Directly setting the environment variable (for testing only)
+os.environ["GROQ_API_KEY"] = "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"  # Replace with real key
 
 def getDesciption(model_name, metrics):
     prompt = ChatPromptTemplate.from_messages(
@@ -21,10 +21,14 @@ def getDesciption(model_name, metrics):
         ]
     )
 
+    api_key = os.getenv("GROQ_API_KEY")
+    if not api_key:
+        raise ValueError("Missing GROQ_API_KEY")
+
     groqApi = ChatGroq(
         model="gemma2-9b-it",
         temperature=1,
-        api_key=os.getenv("GROQ_API_KEY")  # safe and avoids deployment issues
+        api_key=api_key
     )
 
     outputparser = StrOutputParser()
@@ -32,26 +36,20 @@ def getDesciption(model_name, metrics):
         
     response = chainSec.invoke({"model_name": model_name, "kpis": metrics})
 
-    # Format markdown-style bold to HTML and add line breaks after periods
+    # Optional: Markdown formatting cleanup
     response = re.sub(r"\*\*(.*?)\*\*", r"<strong>\1</strong>", response)
     response = re.sub(r'(?<!\d)\.(\s|$)', r'.<br>\1', response)
 
     return response
 
-# Only for testing locally
+# Test it out
 if __name__ == "__main__":
-    model_name = "linear_regression"
+    model_name = "random_forest"
     metrics = {
-        'R2': 0.7867,
-        'MSE': 0.2459,
-        'RMSE': 0.4959,
-        'MAE': 0.2999,
-        'MAPE': 4.72
+        'Accuracy': 0.94,
+        'Precision': 0.92,
+        'Recall': 0.93,
+        'F1-Score': 0.925
     }
 
-    response = getDesciption(model_name, metrics)
-    print(response)
-
-    # Optional: format for templates
-    response = re.sub(r"\*\*(.*?)\*\*", r'}}<strong>{{\1}}</strong>{{', response)
-    print(response)
+    print(getDesciption(model_name, metrics))
